@@ -1,0 +1,35 @@
+# COMPILED
+*.o
+*.a
+*.gcda
+*.gcno
+*.so
+# !COMPILED
+
+# BINARY
+a.out
+executable
+binaryname
+unit_tests
+libasm.so
+# !BINARY
+
+# TEMPORARY
+src/main.c
+*#*
+*~
+*.vscode*
+# !TEMPORARY
+
+# MY_THINGS
+.notes
+
+file
+log
+oui
+ok
+# !MY_THINGS
+
+# ACTUAL PROJECT
+
+# !ACTUAL PROJECT
