@@ -18,8 +18,7 @@ jobs:
           sudo apt install nasm
       - name: Compile project
         run: |
-          ls
-          make
+          make -C /
       - name: Full clean project
         run: |
           make fclean
