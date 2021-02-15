@@ -3,6 +3,7 @@ name: C project Arthur
 on:
   push:
     branches:
+      - dev
       - master
 
 jobs:
@@ -16,6 +17,10 @@ jobs:
       - name: Full clean project
         run: |
           make fclean
+            - name: install criterion and gcovr
+      - name: install nasm
+        run: |
+          sudo apt install nasm
       - name: Test_ Compile project
         run: |
           make
