@@ -17,7 +17,6 @@ jobs:
       - name: Full clean project
         run: |
           make fclean
-            - name: install criterion and gcovr
       - name: install nasm
         run: |
           sudo apt install nasm
