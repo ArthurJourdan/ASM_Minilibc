@@ -13,12 +13,13 @@ jobs:
     name: Building
 
     steps:
+      - uses: actions/checkout@v2
       - name: install nasm
         run: |
           sudo apt install nasm
       - name: Compile project
         run: |
-          make -C /
+          make
       - name: Full clean project
         run: |
           make fclean
