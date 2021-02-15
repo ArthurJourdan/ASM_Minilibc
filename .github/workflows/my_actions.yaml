@@ -1,0 +1,57 @@
+name: C project Arthur
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+
+  Build:
+    runs-on: ubuntu-latest
+    name: Building
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Full clean project
+        run: |
+          make fclean
+      - name: Test_ Compile project
+        run: |
+          make
+
+  Unit-test:
+    needs: build
+    runs-on: ubuntu-18.04
+    name: Testing
+
+    steps:
+      - name: install criterion and gcovr
+        run: |
+          sudo add-apt-repository ppa:snaipewastaken/ppa
+          sudo apt update
+          sudo apt install criterion-dev gcovr
+      - uses: actions/checkout@v2
+      - name: Test_ compile and launch tests
+        run: |
+          make tests_run
+
+  # # push-epitech:
+  # #   needs: build
+  # #   runs-on: ubuntu-latest
+  # #   steps:
+  # #     - uses: actions/checkout@v2
+  # #     - name: fetch all commits
+  # #       run: git fetch --prune --unshallow
+  # #     - name: setup ssh
+  # #       run: |
+  # #         mkdir -p ~/.ssh
+  # #         eval `ssh-agent`
+  # #         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+  # #         chmod 400 ~/.ssh/id_rsa
+  # #         ssh-add
+  # #         ssh-keyscan git.epitech.eu > ~/.ssh/known_hosts
+  # #     - name: add repository
+  # #       run: git remote add epitech ##git@git.epitech.eu:/philippe.loctaux@epitech.eu/test_workshop
+  # #     - name: push to repository
+  # #       run: git push epitech master
