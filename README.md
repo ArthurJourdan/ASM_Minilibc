@@ -1,3 +1,3 @@
 # Assembly : mini libc
 
-Epitech project : code a few functins of the libc, into assembly language
+Epitech project : code a few functions of the libc, into assembly language
