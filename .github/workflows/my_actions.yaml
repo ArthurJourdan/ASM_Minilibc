@@ -13,16 +13,21 @@ jobs:
     name: Building
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Full clean project
-        run: |
-          make fclean
       - name: install nasm
         run: |
           sudo apt install nasm
-      - name: Test_ Compile project
+      - name: Compile project
         run: |
           make
+      - name: Full clean project
+        run: |
+          make fclean
+      - name: Full clean and compile project
+        run: |
+          make re
+      - name: Clean project
+        run: |
+          make clean
 
   Unit-test:
     needs: build
@@ -30,14 +35,14 @@ jobs:
     name: Testing
 
     steps:
-      - name: install criterion and gcovr
+      - name: Install criterion and gcovr
         run: |
           sudo add-apt-repository ppa:snaipewastaken/ppa
           sudo apt update
           sudo apt install criterion-dev gcovr
           sudo apt install nasm
       - uses: actions/checkout@v2
-      - name: Test_ compile and launch tests
+      - name: Compile and launch tests
         run: |
           make tests_run
 
