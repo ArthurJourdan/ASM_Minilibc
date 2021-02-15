@@ -36,6 +36,7 @@ jobs:
           sudo add-apt-repository ppa:snaipewastaken/ppa
           sudo apt update
           sudo apt install criterion-dev gcovr
+          sudo apt install nasm
       - uses: actions/checkout@v2
       - name: Test_ compile and launch tests
         run: |
