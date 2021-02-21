@@ -26,7 +26,7 @@ static void get_my_strchr()
     if (!my_lib) {
         return;
     }
-    my_strchr = dlsym(my_lib, "my_strchr");
+    my_strchr = dlsym(my_lib, "strchr");
 }
 
 static void close_lib()
@@ -55,8 +55,6 @@ Test(my_strchr, simple_string, .init=get_my_strchr, .fini=close_lib)
 
     cr_assert_str_eq(result_char, expected_char);
 }
-
-#include <stdio.h>
 
 Test(my_strchr, empty_string, .init=get_my_strchr, .fini=close_lib)
 {

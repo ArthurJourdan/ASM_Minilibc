@@ -4,12 +4,12 @@
 
 BITS 64
 
-global my_memcpy
+global memcpy
 ; void *memcpy(void *dest, const void *src, size_t n)
 
 section .text
 
-my_memcpy:
+memcpy:
     xor rax, rax ; counter = 0
 loop_memcpy:
     cmp rax, rdx ; check if counter >= arg3

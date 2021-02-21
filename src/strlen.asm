@@ -1,15 +1,15 @@
 ;; Arthur Jourdan
 ;; Epitech MiniLibC
-;; my_strlen.asm
+;; strlen.asm
 
 BITS 64
 
-global my_strlen:function ; ask kyllian if optimization
+global strlen:function ; ask kyllian if optimization
 ; size_t strlen(const char *s)
 
 section .text
 
-my_strlen:
+strlen:
     push rbp
     mov rbp, rsp
     xor rax, rax ; counter = 0

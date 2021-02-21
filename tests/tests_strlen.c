@@ -24,7 +24,7 @@ static void get_my_strlen()
     if (!my_lib) {
         return;
     }
-    my_strlen = dlsym(my_lib, "my_strlen");
+    my_strlen = dlsym(my_lib, "strlen");
 }
 
 static void close_lib()

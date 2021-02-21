@@ -1,19 +1,19 @@
 
 BITS 64
 
-extern my_strlen
+extern strlen
 
-global my_putstr
+global putstr
 ; int puts(const char *s)
 
 section .text
 
-my_putstr:
+putstr:
     push rbp
     mov rbp, rsp
     mov rsi, rdi ; put arg1 which is the string to print into second argument of write
-    call my_strlen ; rax set to strlen of rdi
-    mov rdx, rax ; put length of string into syscall write's third argument, rax being the return value of my_strlen
+    call strlen ; rax set to strlen of rdi
+    mov rdx, rax ; put length of string into syscall write's third argument, rax being the return value of strlen
     mov rax, 1 ; write syscall
     mov rdi, 1 ; filedescriptor of stdout in rdi register
     syscall

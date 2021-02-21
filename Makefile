@@ -62,37 +62,18 @@ ASM_DIR 	=	./src/
 ASM_SRC		=	${ASM_DIR}strchr.asm	\
 				${ASM_DIR}memset.asm	\
 				${ASM_DIR}memcpy.asm	\
-				${ASM_DIR}my_putstr.asm	\
-				${ASM_DIR}my_strlen.asm	\
+				${ASM_DIR}putstr.asm	\
+				${ASM_DIR}strlen.asm	\
 				${ASM_DIR}strcmp.asm	\
 				${ASM_DIR}memmove.asm	\
 				${ASM_DIR}getMax.asm	\
-				${ASM_DIR}getMin.asm	\
-				## ${ASM_DIR}example.asm	\
+				${ASM_DIR}getMin.asm
 
 ASM_OBJ		=	$(ASM_SRC:.asm=.o)
 
 ASM_NAME 	=	libasm.so
 
 ## !Assembly
-
-## Library
-# LIB_DIR		=	./lib/
-
-# SRC_LIB		=	linked_list	\
-# 				print		\
-# 				my			\
-# 				file		\
-
-# LIB_PATHS	=   $(LIB_DIR)lib_my			\
-# 				$(LIB_DIR)lib_file			\
-# 				$(LIB_DIR)lib_linked_list	\
-# 				$(LIB_DIR)lib_print			\
-
-# LIBRARIES   =	$(SRC_LIB:%=-l%)
-
-# LD_FLAGS	=	-L$(LIB_DIR) $(LIBRARIES)
-## !Library
 
 ## Tests
 TEST_NAME	=	unit_tests
@@ -105,35 +86,20 @@ TEST_FILES	=	$(TEST_DIR)tests_strlen.c	\
 				$(TEST_DIR)tests_memcpy.c	\
 				$(TEST_DIR)tests_memmov.c	\
 				$(TEST_DIR)tests_memset.c	\
-				$(TEST_DIR)tests_strchr.c	\
-				#  $(TEST_DIR)unit_tests.c
+				$(TEST_DIR)tests_strchr.c
 
 TEST_OBJ	=	$(TEST_FILES:.c=.o)
 ## !Tests
 ## !Aliases
-
-## Link dynamically preload
-
-LD_PRELOAD_DIR	= ./src
-
-LD_PRELOAD_SRC	=		\
-					# $(LD_DIR)example.c	\
-
-LD_PRELOAD_OBJ	=	$(LD_PRELOAD_SRC:.c=.o)
-
-LD_PRELOAD_NAME	=	my_ld_preload.so
-
-## !Link dynamically preload
-
 
 ## Rules
 
 ## Messages
 MSG_POST_BUILD	=	@$(ECHO) $(BOLD) $(YELLOW) Built $(NAME) $(WHITE) "\t$(C_FLAGS)" $(DEFAULT)
 
-MSG_BUILD_SUCCESS	= 	$(ECHO) $(BOLD) $(GREEN)"\n-> BUILD SUCCESS !"$(DEFAULT)
+MSG_BUILD_SUCCESS	= 	$(ECHO) $(BOLD) $(GREEN)"\n-> BUILD SUCCESS"$(YELLOW)"\n\t\t\t"
 
-MSG_BUILD_FAILURE	=	$(ECHO) $(BOLD) $(RED)"\n-> BUILD FAILED"$(DEFAULT)
+MSG_BUILD_FAILURE	=	$(ECHO) $(BOLD) $(RED)"\n-> BUILD FAILED"$(YELLOW)"\n\t\t\t"
 
 MSG_COMPILATION_SUCCESS	=	$(ECHO) -n $(BOLD) $(GREEN)"  [OK] "$(WHITE)
 
@@ -147,16 +113,14 @@ MSG_FCLEAN	=	$(ECHO) $(BOLD) $(GREEN)✓" FULL CLEAN "
 
 all:		asm
 
-# lib:
-# 			@$(ECHO)
-# 			@for MAKE_PATH in $(LIB_PATHS) ; do \
-# 				make -C $$MAKE_PATH -s ; \
-# 			done
-
 asm:		$(ASM_OBJ)
-			$(LINKER_DYN) -o $(ASM_NAME) $(ASM_OBJ)
+			$(LINKER_DYN) -o $(ASM_NAME) $(ASM_OBJ)	\
+			&& ($(MSG_BUILD_SUCCESS) $(ASM_NAME)$(DEFAULT)) \
+			|| ($(MSG_BUILD_FAILURE) $(ASM_NAME)$(DEFAULT))
+			@($(ECHO))
+			@($(ECHO))
 
-$(NAME):	 asm $(OBJ)
+$(NAME):	asm $(OBJ)
 			@$(ECHO)
 			$(MSG_POST_BUILD)
 			@$(ECHO)
@@ -166,45 +130,43 @@ $(NAME):	 asm $(OBJ)
 			@$(ECHO)
 
 clean:
-			# @for MAKE_PATH in $(LIB_PATHS) ; do \
-			# 	make clean -C $$MAKE_PATH -s ; \
-			# done
 			$(RM) $(RM_FLAGS)
 			$(RM) $(OBJ)
-			$(RM) $(ASM_NAME)
 			$(RM) $(ASM_OBJ)
+			$(RM) $(TEST_OBJ)
 			@($(MSG_CLEAN)$(NAME)$(DEFAULT))
 			@($(MSG_CLEAN)$(ASM_NAME)$(DEFAULT))
+			@($(ECHO))
+			@($(ECHO))
+
 
 fclean:
-			@for MAKE_PATH in $(LIB_PATHS) ; do \
-				make fclean -C $$MAKE_PATH -s ; \
-			done
 			$(RM) $(OBJ)
 			$(RM) $(RM_FLAGS)
 			$(RM) $(NAME)
 			@($(MSG_FCLEAN)$(NAME)$(DEFAULT))
 			$(RM) $(TEST_NAME)
+			$(RM) $(TEST_OBJ)
 			@($(MSG_FCLEAN)$(TEST_NAME)$(DEFAULT))
 			$(RM) $(ASM_NAME)
 			$(RM) $(ASM_OBJ)
 			@($(MSG_FCLEAN)$(ASM_NAME)$(DEFAULT))
+			@($(ECHO))
+			@($(ECHO))
 
 re:		fclean all
 
-re_asm:	fclean asm
-
-tests_run:	re_asm $(TEST_OBJ)
-			#not finished
+tests_run:	re $(TEST_OBJ)
 			@$(ECHO)
-			$(CC) -o $(TEST_NAME) $(TEST_SRC) $(TEST_FILES) $(TEST_FLAGS) $(C_FLAGS) $(LD_FLAGS) \
-			&& $(MSG_BUILD_SUCCESS) \
-			|| $(MSG_BUILD_FAILURE)
+			$(CC) -o $(TEST_NAME) $(TEST_OBJ) $(TEST_FLAGS) $(C_FLAGS) $(LD_FLAGS) \
+			&& ($(MSG_BUILD_SUCCESS) $(TEST_NAME)$(DEFAULT)) \
+			|| ($(MSG_BUILD_FAILURE) $(TEST_NAME)$(DEFAULT))
 			@$(ECHO)
-			@if [ -f $(TEST_NAME) ]; \
+			@if [ -f $(TEST_NAME) ] && [ -f $(ASM_NAME) ]; \
 			then \
 				./$(TEST_NAME) ; \
 			fi
+			@$(ECHO)
 			@$(ECHO)
 
 debug:		C_FLAGS += -g

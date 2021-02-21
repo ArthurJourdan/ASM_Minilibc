@@ -22,7 +22,7 @@ static void get_my_memset()
     if (!my_lib) {
         return;
     }
-    my_memset = dlsym(my_lib, "my_memset");
+    my_memset = dlsym(my_lib, "memset");
 }
 
 static void close_lib()

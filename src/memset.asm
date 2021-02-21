@@ -4,14 +4,14 @@
 
 BITS 64
 
-extern my_putstr
+extern putstr
 
-global my_memset
+global memset
 ; void *memset(void *s, int c, size_t n)
 
 section .text
 
-my_memset:
+memset:
     xor rax, rax ; counter = 0
 loop_memset:
     cmp rax, rdx ; check if counter >= arg3

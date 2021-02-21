@@ -25,7 +25,7 @@ static void get_my_memmove()
     if (!my_lib) {
         return;
     }
-    my_memmove = dlsym(my_lib, "my_memmove");
+    my_memmove = dlsym(my_lib, "memmove");
 }
 
 static void close_lib()

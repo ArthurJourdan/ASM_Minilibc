@@ -25,7 +25,7 @@ static void get_my_memcpy()
     if (!my_lib) {
         return;
     }
-    my_memcpy = dlsym(my_lib, "my_memcpy");
+    my_memcpy = dlsym(my_lib, "memcpy");
 }
 
 static void close_lib()
