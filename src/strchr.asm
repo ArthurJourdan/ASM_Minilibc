@@ -10,10 +10,10 @@ global strchr
 section .text
 
 strchr:
-    cmp BYTE[rdi], 0 ; if end of the string
-    je end_not_found ; if check is true, return NULL
     cmp BYTE[rdi], sil ; check if this char == char in arg2
     je end_strchr ; if check is true, go to function end
+    cmp BYTE[rdi], 0 ; if end of the string
+    je end_not_found ; if check is true, return NULL
     inc rdi
     jmp strchr ; go to the begining of the loop
 end_not_found:

@@ -77,3 +77,14 @@ Test(my_strchr, long_string, .init=get_my_strchr, .fini=close_lib)
 
     cr_assert_str_eq(result_char, expected_char);
 }
+
+Test(my_strchr, find_0, .init=get_my_strchr, .fini=close_lib)
+{
+    if (!my_strchr)
+        cr_skip_test();
+
+    char *result_char = my_strchr(my_test_longStr, '\0');
+    char *expected_char = strchr(my_test_longStr, '\0');
+
+    cr_assert_str_eq(result_char, expected_char);
+}
