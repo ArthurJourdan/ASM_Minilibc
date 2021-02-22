@@ -84,17 +84,17 @@ TEST_DIR	=	./tests/
 
 TEST_FILES	=	\
 				$(TEST_DIR)tests_memmove.c	\
-				# $(TEST_DIR)tests_memcpy.c	\
-				# $(TEST_DIR)tests_strcmp.c	\
-				# $(TEST_DIR)tests_memset.c	\
-				# $(TEST_DIR)tests_rindex.c	\
-				# $(TEST_DIR)tests_strcasecmp.c	\
-				# $(TEST_DIR)tests_strchr.c	\
-				# $(TEST_DIR)tests_strcspn.c	\
-				# $(TEST_DIR)tests_strlen.c	\
-				# $(TEST_DIR)tests_strncmp.c	\
-				# $(TEST_DIR)tests_strpbrk.c	\
-				# $(TEST_DIR)tests_strstr.c	\
+				$(TEST_DIR)tests_memcpy.c	\
+				$(TEST_DIR)tests_strcmp.c	\
+				$(TEST_DIR)tests_memset.c	\
+				$(TEST_DIR)tests_rindex.c	\
+				$(TEST_DIR)tests_strcasecmp.c	\
+				$(TEST_DIR)tests_strchr.c	\
+				$(TEST_DIR)tests_strcspn.c	\
+				$(TEST_DIR)tests_strlen.c	\
+				$(TEST_DIR)tests_strncmp.c	\
+				$(TEST_DIR)tests_strpbrk.c	\
+				$(TEST_DIR)tests_strstr.c	\
 
 TEST_OBJ	=	$(TEST_FILES:.c=.o)
 ## !Tests
