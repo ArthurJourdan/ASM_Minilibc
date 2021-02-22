@@ -116,15 +116,15 @@ Test(my_memmove, overlap, .init=get_my_memmove, .fini=close_lib)
 {
     size_t my_len = strlen(my_str);
     char *my_expect = malloc(sizeof(char) * my_len);
-    char *my_expect_2 = my_expect + (my_len / 2);
+    char *my_expect_2 = my_expect + (my_len / sizeof(my_str[0]));
     char *my_cpy = malloc(sizeof(char) * my_len);
-    char *my_cpy_2 = my_cpy + (my_len / 2);
+    char *my_cpy_2 = my_cpy + (my_len / sizeof(my_str[0]));
 
     memmove(my_expect, my_str, my_len);
     memmove(my_expect_2, my_expect, my_len);
 
-    memmove(my_cpy, my_str, my_len);
-    memmove(my_cpy_2, my_str, my_len);
+    my_memmove(my_cpy, my_str, my_len);
+    my_memmove(my_cpy_2, my_str, my_len);
 
     cr_assert_str_eq(my_expect, my_cpy);
     cr_assert_str_eq(my_expect_2, my_cpy_2);
@@ -132,12 +132,12 @@ Test(my_memmove, overlap, .init=get_my_memmove, .fini=close_lib)
 
 Test(my_memmove, int_arr, .init=get_my_memmove, .fini=close_lib)
 {
-    size_t my_len = sizeof(my_int_arr) / sizeof(my_int_arr[0]);
-    int *my_expect = malloc(sizeof(int) * my_len);
-    int *my_cpy = malloc(sizeof(int) * my_len);
+    size_t my_len = sizeof(my_int_arr);
+    int *my_expect = malloc(my_len);
+    int *my_cpy = malloc(my_len);
 
     memmove(my_expect, my_int_arr, my_len);
-    memmove(my_cpy, my_int_arr, my_len);
+    my_memmove(my_cpy, my_int_arr, my_len);
 
     cr_assert_arr_eq(my_expect, my_cpy, my_len);
 }
@@ -145,17 +145,17 @@ Test(my_memmove, int_arr, .init=get_my_memmove, .fini=close_lib)
 
 Test(my_memmove, overlap_int_arr, .init=get_my_memmove, .fini=close_lib)
 {
-    size_t my_len = sizeof(my_int_arr) / sizeof(my_int_arr[0]);
-    int *my_expect = malloc(sizeof(int) * my_len);
-    int *my_expect_2 = my_expect + (my_len / 2);
-    int *my_cpy = malloc(sizeof(int) * my_len);
-    int *my_cpy_2 = my_cpy + (my_len / 2);
+    size_t my_len = sizeof(my_int_arr);
+    int *my_expect = malloc(my_len);
+    int *my_expect_2 = my_expect + (my_len / sizeof(my_int_arr[0]));
+    int *my_cpy = malloc(my_len);
+    int *my_cpy_2 = my_cpy + (my_len / sizeof(my_int_arr[0]));
 
     memmove(my_expect, my_int_arr, my_len);
     memmove(my_expect_2, my_expect, my_len);
 
-    memmove(my_cpy, my_int_arr, my_len);
-    memmove(my_cpy_2, my_int_arr, my_len);
+    my_memmove(my_cpy, my_int_arr, my_len);
+    my_memmove(my_cpy_2, my_cpy, my_len);
 
     cr_assert_arr_eq(my_expect, my_cpy, my_len);
     cr_assert_arr_eq(my_expect_2, my_cpy_2, my_len);
