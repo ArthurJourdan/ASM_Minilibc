@@ -92,3 +92,15 @@ Test(my_memset, long_string, .init=get_my_memset, .fini=close_lib)
 
     cr_assert_str_eq(str_copyied, expected_set);
 }
+
+Test(my_memset, NULL_dest, .init=get_my_memset, .fini=close_lib)
+{
+    size_t size = 10;
+    void *str_copyied = NULL;
+    char *expected_set = NULL;
+
+    my_memset(str_copyied, my_char, size);
+    memset(expected_set, my_char, size);
+
+    cr_assert_str_eq(str_copyied, expected_set);
+}

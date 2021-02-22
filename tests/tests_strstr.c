@@ -80,3 +80,30 @@ Test(my_strstr, find_nothing, .init=get_my_strstr, .fini=close_lib)
 
     cr_assert_str_eq(result_str, expected_str);
 }
+
+Test(my_strstr, NULL_str, .init=get_my_strstr, .fini=close_lib)
+{
+    char *my_null = NULL;
+    char *result_str = my_strstr(my_null, my_str_sub);
+    char *expected_str = strstr(my_null, my_str_sub);
+
+    cr_assert_str_eq(result_str, expected_str);
+}
+
+Test(my_strstr, NULL_str_sub, .init=get_my_strstr, .fini=close_lib)
+{
+    char *my_null = NULL;
+    char *result_str = my_strstr(my_str, my_null);
+    char *expected_str = strstr(my_str, my_null);
+
+    cr_assert_str_eq(result_str, expected_str);
+}
+
+Test(my_strstr, NULL_args, .init=get_my_strstr, .fini=close_lib)
+{
+    char *my_null = NULL;
+    char *result_str = my_strstr(my_null, my_null);
+    char *expected_str = strstr(my_null, my_null);
+
+    cr_assert_str_eq(result_str, expected_str);
+}

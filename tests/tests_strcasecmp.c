@@ -87,3 +87,30 @@ Test(my_strcasecmp, two_empty_str, .init=get_my_strcasecmp, .fini=close_lib)
 
     cr_assert_eq(my_cmp, my_expected_cmp);
 }
+
+Test(my_strcasecmp, NULL_s1_, .init=get_my_strcasecmp, .fini=close_lib)
+{
+    void *my_null = NULL;
+    int my_cmp = my_strcasecmp(my_null, my_str);
+    int my_expected_cmp = strcasecmp(my_null, my_str);
+
+    cr_assert_eq(my_cmp, my_expected_cmp);
+}
+
+Test(my_strcasecmp, NULL_s2_, .init=get_my_strcasecmp, .fini=close_lib)
+{
+    void *my_null = NULL;
+    int my_cmp = my_strcasecmp(my_str, my_null);
+    int my_expected_cmp = strcasecmp(my_str, my_null);
+
+    cr_assert_eq(my_cmp, my_expected_cmp);
+}
+
+Test(my_strcasecmp, NULL_args_, .init=get_my_strcasecmp, .fini=close_lib)
+{
+    void *my_null = NULL;
+    int my_cmp = my_strcasecmp(my_null, my_null);
+    int my_expected_cmp = strcasecmp(my_null, my_null);
+
+    cr_assert_eq(my_cmp, my_expected_cmp);
+}

@@ -127,7 +127,6 @@ Test(my_memcpy, int_arr, .init=get_my_memcpy, .fini=close_lib)
     cr_assert_arr_eq(my_expect, my_cpy, my_len);
 }
 
-
 Test(my_memcpy, overlap_int_arr, .init=get_my_memcpy, .fini=close_lib)
 {
     size_t my_len = sizeof(my_int_arr);
@@ -144,4 +143,45 @@ Test(my_memcpy, overlap_int_arr, .init=get_my_memcpy, .fini=close_lib)
 
     cr_assert_arr_eq(my_expect, my_cpy, my_len);
     cr_assert_arr_eq(my_expect_2, my_cpy_2, my_len);
+}
+
+Test(my_memcpy, NULL_dest, .init=get_my_memcpy, .fini=close_lib)
+{
+    size_t size = strlen(my_str);
+    void *my_null = NULL;
+    void *my_copy = NULL;
+    void *my_expect = NULL;
+
+    my_memcpy(my_copy, my_null, size);
+    memcpy(my_expect, my_null, size);
+
+    cr_assert_str_eq(my_copy, my_expect);
+}
+
+Test(my_memcpy, NULL_src, .init=get_my_memcpy, .fini=close_lib)
+{
+    size_t size = strlen(my_str);
+    void *my_null = NULL;
+    char *my_copy = malloc(sizeof(char) * (size + 1));
+    char *my_expect = malloc(sizeof(char) * (size + 1));
+
+    if (!my_copy || !my_expect)
+        cr_skip_test();
+    my_memcpy(my_copy, my_null, size);
+    memcpy(my_expect, my_null, size);
+
+    cr_assert_str_eq(my_copy, my_expect);
+}
+
+Test(my_memcpy, NULL_args, .init=get_my_memcpy, .fini=close_lib)
+{
+    size_t size = strlen(my_str);
+    void *my_null = NULL;
+    char *my_copy = NULL;
+    char *my_expect = NULL;
+
+    my_memcpy(my_copy, my_null, size);
+    memcpy(my_expect, my_null, size);
+
+    cr_assert_str_eq(my_copy, my_expect);
 }

@@ -105,3 +105,30 @@ Test(my_strcspn, near_string_wide, .init=get_my_strcspn, .fini=close_lib)
 
     cr_assert(my_len == expected_len);
 }
+
+Test(my_strcspn, NULL_str, .init=get_my_strcspn, .fini=close_lib)
+{
+    char *my_null = NULL;
+    size_t my_len = my_strcspn(my_null, my_str);
+    size_t expected_len = strcspn(my_null, my_str);
+
+    cr_assert(my_len == expected_len);
+}
+
+Test(my_strcspn, NULL_reject, .init=get_my_strcspn, .fini=close_lib)
+{
+    char *my_null = NULL;
+    size_t my_len = my_strcspn(my_str, my_null);
+    size_t expected_len = strcspn(my_str, my_null);
+
+    cr_assert(my_len == expected_len);
+}
+
+Test(my_strcspn, NULL_args, .init=get_my_strcspn, .fini=close_lib)
+{
+    char *my_null = NULL;
+    size_t my_len = my_strcspn(my_null, my_null);
+    size_t expected_len = strcspn(my_null, my_null);
+
+    cr_assert(my_len == expected_len);
+}

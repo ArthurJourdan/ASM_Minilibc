@@ -80,3 +80,12 @@ Test(my_rindex, find_0, .init=get_my_rindex, .fini=close_lib)
 
     cr_assert_str_eq(result_char, expected_char);
 }
+
+Test(my_rindex, NULL_src, .init=get_my_rindex, .fini=close_lib)
+{
+    void *my_null = NULL;
+    char *result_char = my_rindex(my_null, my_char);
+    char *expected_char = rindex(my_null, my_char);
+
+    cr_assert_str_eq(result_char, expected_char);
+}
