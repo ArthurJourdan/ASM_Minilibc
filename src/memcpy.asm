@@ -15,12 +15,12 @@ memcpy:
 .LOOP:
     cmp rax, rdx        ; check if counter >= arg3
     jae .RET            ; jump if rax is above or equal to rdx
-    mov r10, [rsi + rax]
-    mov [rdi + rax], r10
+    mov r10b, BYTE[rsi + rax]
+    mov BYTE[rdi + rax], r10b
     inc rax
     jmp .LOOP           ; go to the begining of the loop
 .RET:
-    mov rax, rdi
+    mov rax, rdi        ; put ptr on first arg into return value
     ret ; return rax
 
 ;   here is an other version,
@@ -32,5 +32,5 @@ memcpy:
     ; mov [rdi], r10
     ; inc rax
     ; inc rdi
-    ; inc rsi
+    ; inc rsi         ; put ptr on first arg into return value
     ; jmp .LOOP       ; go to the begining of the loop

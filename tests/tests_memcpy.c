@@ -44,57 +44,57 @@ static void close_lib()
 Test(my_memcpy, simple, .init=get_my_memcpy, .fini=close_lib)
 {
     size_t size = strlen(my_str);
-    char *str_copyied = malloc(sizeof(char) * (size + 1));
-    char *expected_cpy = malloc(sizeof(char) * (size + 1));
+    char *my_copy = malloc(sizeof(char) * (size + 1));
+    char *my_expect = malloc(sizeof(char) * (size + 1));
 
-    if (!str_copyied || !expected_cpy)
+    if (!my_copy || !my_expect)
         cr_skip_test();
-    my_memcpy(str_copyied, my_str, size);
-    memcpy(expected_cpy, my_str, size);
+    my_memcpy(my_copy, my_str, size);
+    memcpy(my_expect, my_str, size);
 
-    cr_assert_str_eq(str_copyied, expected_cpy);
+    cr_assert_str_eq(my_copy, my_expect);
 }
 
 Test(my_memcpy, simple_string, .init=get_my_memcpy, .fini=close_lib)
 {
     size_t size = strlen(my_str);
-    void *str_copyied = malloc(sizeof(char) * (size + 1));
-    char *expected_cpy = malloc(sizeof(char) * (size + 1));
+    char *my_copy = malloc(sizeof(char) * (size + 1));
+    char *my_expect = malloc(sizeof(char) * (size + 1));
 
-    if (!str_copyied || !expected_cpy)
+    if (!my_copy || !my_expect)
         cr_skip_test();
-    my_memcpy(str_copyied, my_str, size);
-    memcpy(expected_cpy, my_str, size);
+    my_memcpy(my_copy, my_str, size);
+    memcpy(my_expect, my_str, size);
 
-    cr_assert_str_eq(str_copyied, expected_cpy);
+    cr_assert_str_eq(my_copy, my_expect);
 }
 
 Test(my_memcpy, empty_string, .init=get_my_memcpy, .fini=close_lib)
 {
     size_t size = strlen(my_str_empty);
-    void *str_copyied = malloc(sizeof(char) * (size + 1));
-    char *expected_cpy = malloc(sizeof(char) * (size + 1));
+    char *my_copy = malloc(sizeof(char) * (size + 1));
+    char *my_expect = malloc(sizeof(char) * (size + 1));
 
-    if (!str_copyied || !expected_cpy)
+    if (!my_copy || !my_expect)
         cr_skip_test();
-    my_memcpy(str_copyied, my_str_empty, size);
-    memcpy(expected_cpy, my_str_empty, size);
+    my_memcpy(my_copy, my_str_empty, size);
+    memcpy(my_expect, my_str_empty, size);
 
-    cr_assert_str_eq(str_copyied, expected_cpy);
+    cr_assert_str_eq(my_copy, my_expect);
 }
 
 Test(my_memcpy, long_string, .init=get_my_memcpy, .fini=close_lib)
 {
     size_t size = strlen(my_str_long);
-    void *str_copyied = malloc(sizeof(char) * (size + 1));
-    char *expected_cpy = malloc(sizeof(char) * (size + 1));
+    char *my_copy = malloc(sizeof(char) * (size + 1));
+    char *my_expect = malloc(sizeof(char) * (size + 1));
 
-    if (!str_copyied || !expected_cpy)
+    if (!my_copy || !my_expect)
         cr_skip_test();
-    my_memcpy(str_copyied, my_str_long, size);
-    memcpy(expected_cpy, my_str_long, size);
+    my_memcpy(my_copy, my_str_long, size);
+    memcpy(my_expect, my_str_long, size);
 
-    cr_assert_str_eq(str_copyied, expected_cpy);
+    cr_assert_str_eq(my_copy, my_expect);
 }
 
 Test(my_memcpy, overlap, .init=get_my_memcpy, .fini=close_lib)

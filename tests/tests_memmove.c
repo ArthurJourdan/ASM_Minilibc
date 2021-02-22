@@ -43,120 +43,120 @@ static void close_lib()
 
 Test(my_memmove, simple, .init=get_my_memmove, .fini=close_lib)
 {
-    size_t size = strlen(my_str);
-    char *str_moved = malloc(sizeof(char) * (size + 1));
-    char *expected_moved = malloc(sizeof(char) * (size + 1));
+    size_t my_size = strlen(my_str);
+    char *my_move = malloc(sizeof(char) * (my_size + 1));
+    char *my_expect = malloc(sizeof(char) * (my_size + 1));
 
-    if (!str_moved || !expected_moved)
+    if (!my_move || !my_expect)
         cr_skip_test();
-    my_memmove(str_moved, my_str, size);
-    memmove(expected_moved, my_str, size);
+    my_memmove(my_move, my_str, my_size);
+    memmove(my_expect, my_str, my_size);
 
-    cr_assert_str_eq(str_moved, expected_moved);
+    cr_assert_str_eq(my_move, my_expect);
 }
 
 Test(my_memmove, simple_string, .init=get_my_memmove, .fini=close_lib)
 {
-    size_t size = strlen(my_str);
-    void *str_moved = malloc(sizeof(char) * (size + 1));
-    char *expected_moved = malloc(sizeof(char) * (size + 1));
+    size_t my_size = strlen(my_str);
+    char *my_move = malloc(sizeof(char) * (my_size + 1));
+    char *my_expect = malloc(sizeof(char) * (my_size + 1));
 
-    if (!str_moved || !expected_moved)
+    if (!my_move || !my_expect)
         cr_skip_test();
-    my_memmove(str_moved, my_str, size);
-    memmove(expected_moved, my_str, size);
+    my_memmove(my_move, my_str, my_size);
+    memmove(my_expect, my_str, my_size);
 
-    cr_assert_str_eq(str_moved, expected_moved);
+    cr_assert_str_eq(my_move, my_expect);
 }
 
 Test(my_memmove, empty_string, .init=get_my_memmove, .fini=close_lib)
 {
-    size_t size = strlen(my_str_empty);
-    void *str_moved = malloc(sizeof(char) * (size + 1));
-    char *expected_moved = malloc(sizeof(char) * (size + 1));
+    size_t my_size = strlen(my_str_empty);
+    char *my_move = malloc(sizeof(char) * (my_size + 1));
+    char *my_expect = malloc(sizeof(char) * (my_size + 1));
 
-    if (!str_moved || !expected_moved)
+    if (!my_move || !my_expect)
         cr_skip_test();
-    my_memmove(str_moved, my_str_empty, size);
-    memmove(expected_moved, my_str_empty, size);
+    my_memmove(my_move, my_str_empty, my_size);
+    memmove(my_expect, my_str_empty, my_size);
 
-    cr_assert_str_eq(str_moved, expected_moved);
+    cr_assert_str_eq(my_move, my_expect);
 }
 
 Test(my_memmove, long_string, .init=get_my_memmove, .fini=close_lib)
 {
-    size_t size = strlen(my_str_wide);
-    void *str_moved = malloc(sizeof(char) * (size + 1));
-    char *expected_moved = malloc(sizeof(char) * (size + 1));
+    size_t my_size = strlen(my_str_wide);
+    char *my_move = malloc(sizeof(char) * (my_size + 1));
+    char *my_expect = malloc(sizeof(char) * (my_size + 1));
 
-    if (!str_moved || !expected_moved)
+    if (!my_move || !my_expect)
         cr_skip_test();
-    my_memmove(str_moved, my_str_wide, size);
-    memmove(expected_moved, my_str_wide, size);
+    my_memmove(my_move, my_str_wide, my_size);
+    memmove(my_expect, my_str_wide, my_size);
 
-    cr_assert_str_eq(str_moved, expected_moved);
+    cr_assert_str_eq(my_move, my_expect);
 }
 
 
 Test(my_memmove, long_string_partially, .init=get_my_memmove, .fini=close_lib)
 {
-    size_t size = strlen(my_str_wide) / 2;
-    void *str_moved = malloc(sizeof(char) * (size + 1));
-    char *expected_moved = malloc(sizeof(char) * (size + 1));
+    size_t my_size = strlen(my_str_wide) / 2;
+    char *my_move = malloc(sizeof(char) * (my_size + 1));
+    char *my_expect = malloc(sizeof(char) * (my_size + 1));
 
-    if (!str_moved || !expected_moved)
+    if (!my_move || !my_expect)
         cr_skip_test();
-    my_memmove(str_moved, my_str_wide, size);
-    memmove(expected_moved, my_str_wide, size);
+    my_memmove(my_move, my_str_wide, my_size);
+    memmove(my_expect, my_str_wide, my_size);
 
-    cr_assert_str_eq(str_moved, expected_moved);
+    cr_assert_str_eq(my_move, my_expect);
 }
 
 Test(my_memmove, overlap, .init=get_my_memmove, .fini=close_lib)
 {
-    size_t my_len = strlen(my_str);
-    char *my_expect = malloc(sizeof(char) * my_len);
-    char *my_expect_2 = my_expect + (my_len / sizeof(my_str[0]));
-    char *my_cpy = malloc(sizeof(char) * my_len);
-    char *my_cpy_2 = my_cpy + (my_len / sizeof(my_str[0]));
+    size_t my_size = strlen(my_str);
+    char *my_expect = malloc(sizeof(char) * my_size);
+    char *my_expect_2 = my_expect + (my_size / sizeof(my_str[0]));
+    char *my_move = malloc(sizeof(char) * my_size);
+    char *my_move_2 = my_move + (my_size / sizeof(my_str[0]));
 
-    memmove(my_expect, my_str, my_len);
-    memmove(my_expect_2, my_expect, my_len);
+    memmove(my_expect, my_str, my_size);
+    memmove(my_expect_2, my_expect, my_size);
 
-    my_memmove(my_cpy, my_str, my_len);
-    my_memmove(my_cpy_2, my_str, my_len);
+    my_memmove(my_move, my_str, my_size);
+    my_memmove(my_move_2, my_str, my_size);
 
-    cr_assert_str_eq(my_expect, my_cpy);
-    cr_assert_str_eq(my_expect_2, my_cpy_2);
+    cr_assert_str_eq(my_expect, my_move);
+    cr_assert_str_eq(my_expect_2, my_move_2);
 }
 
 Test(my_memmove, int_arr, .init=get_my_memmove, .fini=close_lib)
 {
-    size_t my_len = sizeof(my_int_arr);
-    int *my_expect = malloc(my_len);
-    int *my_cpy = malloc(my_len);
+    size_t my_size = sizeof(my_int_arr);
+    int *my_expect = malloc(my_size);
+    int *my_move = malloc(my_size);
 
-    memmove(my_expect, my_int_arr, my_len);
-    my_memmove(my_cpy, my_int_arr, my_len);
+    memmove(my_expect, my_int_arr, my_size);
+    my_memmove(my_move, my_int_arr, my_size);
 
-    cr_assert_arr_eq(my_expect, my_cpy, my_len);
+    cr_assert_arr_eq(my_expect, my_move, my_size);
 }
 
 
 Test(my_memmove, overlap_int_arr, .init=get_my_memmove, .fini=close_lib)
 {
-    size_t my_len = sizeof(my_int_arr);
-    int *my_expect = malloc(my_len);
-    int *my_expect_2 = my_expect + (my_len / sizeof(my_int_arr[0]));
-    int *my_cpy = malloc(my_len);
-    int *my_cpy_2 = my_cpy + (my_len / sizeof(my_int_arr[0]));
+    size_t my_size = sizeof(my_int_arr);
+    int *my_expect = malloc(my_size);
+    int *my_expect_2 = my_expect + (my_size / sizeof(my_int_arr[0]));
+    int *my_move = malloc(my_size);
+    int *my_move_2 = my_move + (my_size / sizeof(my_int_arr[0]));
 
-    memmove(my_expect, my_int_arr, my_len);
-    memmove(my_expect_2, my_expect, my_len);
+    memmove(my_expect, my_int_arr, my_size);
+    memmove(my_expect_2, my_expect, my_size);
 
-    my_memmove(my_cpy, my_int_arr, my_len);
-    my_memmove(my_cpy_2, my_cpy, my_len);
+    my_memmove(my_move, my_int_arr, my_size);
+    my_memmove(my_move_2, my_move, my_size);
 
-    cr_assert_arr_eq(my_expect, my_cpy, my_len);
-    cr_assert_arr_eq(my_expect_2, my_cpy_2, my_len);
+    cr_assert_arr_eq(my_expect, my_move, my_size);
+    cr_assert_arr_eq(my_expect_2, my_move_2, my_size);
 }

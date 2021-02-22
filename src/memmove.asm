@@ -4,20 +4,30 @@
 
 BITS 64
 
+extern memcpy
+
 global memmove
 ; void *memmove(void *dest, const void *src, size_t n)
 
 section .text
 
 memmove:
-    mov rax, 0 ; counter = 0
-loop_memmove:
-    cmp rax, rdx ; check if counter < arg3
-    jae end_memmove ; jump if rax is above or equal to rdx
-    mov rcx, [rsi + rax]
-    mov [rdi + rax], rcx
-    inc rax
-    jmp loop_memmove ; go to the begining of the loop
-end_memmove:
-    mov rax, rdi
-    ret ; return rax
+    cmp rdi, rsi        ; compare first and second arguments
+    jb .REVERSE         ; copy memory starting from end, if first is lower than second
+    call memcpy         ; else do a memcpy
+    mov rdi, rax
+    jmp .RET
+
+.REVERSE:
+    mov rax, rdx          ; counter = arg3
+    jmp .LOOP
+.LOOP:
+    mov r10b, BYTE[rsi + rax]
+    mov BYTE[rdi + rax], r10b
+    cmp rax, 0         ; check if counter == third argument
+    je .RET            ; if rax is equal to rdx, return
+    dec rax
+    jmp .LOOP           ; go to the begining of the loop
+.RET:
+    mov rax, rdi        ; put ptr on first arg into return value
+    ret                 ; return rax

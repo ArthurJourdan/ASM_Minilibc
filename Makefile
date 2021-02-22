@@ -12,13 +12,13 @@ DEFAULT =	   "\033[00m"
 ## Print colors
 DEFAULT =	   "\e[0m"
 BOLD	=	   "\e[1m"
-DIM	 	=	   "\e[2m"
+DIM		=	   "\e[2m"
 UNDLN   =	   "\e[4m"
 SHINE   =	   "\e[5;37m"
 RODE	=	   "\e[9;37m"
 
 BLACK   =	   "\e[30m"
-RED	 	=	   "\e[31m"
+RED		=	   "\e[31m"
 GREEN   =	   "\e[32m"
 YELLOW  =	   "\e[33m"
 BLUE	=	   "\e[34m"
@@ -28,7 +28,7 @@ WHITE   =	   "\e[1;37m"
 ## !Print colors
 
 ## Shortcut / unity of variables
-CC			= 	@gcc
+CC			=	@gcc
 
 INCLUDE		=	-I include
 
@@ -47,17 +47,17 @@ SRC			=	${SRC_DIR}main.c	\
 
 OBJ			=	$(SRC:.c=.o)
 
-NAME		=	binaryname
+NAME		=	executable
 ## Source
 
 ## Assembly
 
-ASSEMBLER 	=	@nasm
-ASM_FORMAT 	=	-f elf64
+ASSEMBLER	=	@nasm
+ASM_FORMAT	=	-f elf64
 
-LINKER_DYN 	=	@ld -shared -Bsymbolic -Bsymbolic-functions #-lc # tiret petit l comme avec gcc lib donc include libc
+LINKER_DYN	=	@ld -shared -Bsymbolic -Bsymbolic-functions #-lc # tiret petit l comme avec gcc lib donc include libc
 
-ASM_DIR 	=	./src/
+ASM_DIR		=	./src/
 
 ASM_SRC		=	${ASM_DIR}strchr.asm	\
 				${ASM_DIR}memset.asm	\
@@ -71,7 +71,7 @@ ASM_SRC		=	${ASM_DIR}strchr.asm	\
 
 ASM_OBJ		=	$(ASM_SRC:.asm=.o)
 
-ASM_NAME 	=	libasm.so
+ASM_NAME	=	libasm.so
 
 ## !Assembly
 
@@ -82,18 +82,19 @@ TEST_FLAGS	=   --coverage -lcriterion -ldl
 
 TEST_DIR	=	./tests/
 
-TEST_FILES	=	$(TEST_DIR)tests_memcpy.c	\
+TEST_FILES	=	\
 				$(TEST_DIR)tests_memmove.c	\
-				$(TEST_DIR)tests_memset.c	\
-				$(TEST_DIR)tests_rindex.c	\
-				$(TEST_DIR)tests_strcasecmp.c	\
-				$(TEST_DIR)tests_strchr.c	\
-				$(TEST_DIR)tests_strcmp.c	\
-				$(TEST_DIR)tests_strcspn.c	\
-				$(TEST_DIR)tests_strlen.c	\
-				$(TEST_DIR)tests_strncmp.c	\
-				$(TEST_DIR)tests_strpbrk.c	\
-				$(TEST_DIR)tests_strstr.c	\
+				# $(TEST_DIR)tests_memcpy.c	\
+				# $(TEST_DIR)tests_strcmp.c	\
+				# $(TEST_DIR)tests_memset.c	\
+				# $(TEST_DIR)tests_rindex.c	\
+				# $(TEST_DIR)tests_strcasecmp.c	\
+				# $(TEST_DIR)tests_strchr.c	\
+				# $(TEST_DIR)tests_strcspn.c	\
+				# $(TEST_DIR)tests_strlen.c	\
+				# $(TEST_DIR)tests_strncmp.c	\
+				# $(TEST_DIR)tests_strpbrk.c	\
+				# $(TEST_DIR)tests_strstr.c	\
 
 TEST_OBJ	=	$(TEST_FILES:.c=.o)
 ## !Tests
@@ -104,7 +105,7 @@ TEST_OBJ	=	$(TEST_FILES:.c=.o)
 ## Messages
 MSG_POST_BUILD	=	@$(ECHO) $(BOLD) $(YELLOW) Built $(NAME) $(WHITE) "\t$(C_FLAGS)" $(DEFAULT)
 
-MSG_BUILD_SUCCESS	= 	$(ECHO) $(BOLD) $(GREEN)"\n-> BUILD SUCCESS"$(YELLOW)"\n\t\t\t"
+MSG_BUILD_SUCCESS	=	$(ECHO) $(BOLD) $(GREEN)"\n-> BUILD SUCCESS"$(YELLOW)"\n\t\t\t"
 
 MSG_BUILD_FAILURE	=	$(ECHO) $(BOLD) $(RED)"\n-> BUILD FAILED"$(YELLOW)"\n\t\t\t"
 
