@@ -100,3 +100,24 @@ Test(my_memcpy, long_string, .init=get_my_memcpy, .fini=close_lib)
 
     cr_assert_str_eq(str_copyied, expected_cpy);
 }
+
+Test(my_memcpy, overlap, .init=get_my_memcpy, .fini=close_lib)
+{
+    if (!my_memcpy)
+        cr_skip_test();
+
+    size_t my_len = strlen(my_test_str);
+    char *my_expected_str = malloc(sizeof(my_len));
+    char *my_expected_str_2 = my_expected_str + my_len / 2;
+    char *my_str = malloc(sizeof(my_len));
+    char *my_str_2 = my_str + my_len / 2;
+
+    memcpy(my_expected_str, my_test_str, my_len);
+    memcpy(my_expected_str_2, my_expected_str, my_len);
+
+    memcpy(my_str, my_test_str, my_len);
+    memcpy(my_str_2, my_str, my_len);
+
+    cr_assert_str_eq(my_expected_str, my_str);
+    cr_assert_str_eq(my_expected_str_2, my_str_2);
+}
