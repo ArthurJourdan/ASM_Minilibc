@@ -13,7 +13,7 @@ getMin:
     ; mov rax, 0
     mov rax, rdi
     cmp rax, rsi
-    jbe end_getMin
+    jbe .RET
     mov rax, rsi
-end_getMin:
+.RET:
     ret ; return rax
