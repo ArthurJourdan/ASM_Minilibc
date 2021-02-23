@@ -5,21 +5,22 @@
 ** ASM minilibc
 */
 
-#include <criterion/criterion.h>
 #include <dlfcn.h>
+#include <criterion/criterion.h>
 
 static const char *my_str = "qwerty";
 static const char *my_str_near = "awdrgy";
 static const char *my_str_different = "asdf";
 static const char *my_str_empty = "";
-static const char *my_str_wide = \
-"qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbn";
+static const char *my_str_wide = "qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjk"
+                                 "lzxcvbnmqwertyuiopasdfghjklzxcvbn";
 
 static const char *fp_libasm = "./libasm.so";
 static size_t (*my_strcspn)(const char *, const char *);
 static void *my_lib;
 static const char *err_missing_lib = "Shared lib \"%s\" could not be opened\n";
-static const char *err_missing_symbol = "Symbol \"%s\" could not be found in \"%s\"\n";
+static const char *err_missing_symbol =
+    "Symbol \"%s\" could not be found in \"%s\"\n";
 
 static void get_my_strcspn()
 {
@@ -41,7 +42,7 @@ static void close_lib()
         dlclose(my_lib);
 }
 
-Test(my_strcspn, same_string, .init=get_my_strcspn, .fini=close_lib)
+Test(my_strcspn, same_string, .init = get_my_strcspn, .fini = close_lib)
 {
     size_t my_len = my_strcspn(my_str, my_str);
     size_t expected_len = strcspn(my_str, my_str);
@@ -49,7 +50,7 @@ Test(my_strcspn, same_string, .init=get_my_strcspn, .fini=close_lib)
     cr_assert(my_len == expected_len);
 }
 
-Test(my_strcspn, different_string, .init=get_my_strcspn, .fini=close_lib)
+Test(my_strcspn, different_string, .init = get_my_strcspn, .fini = close_lib)
 {
     size_t my_len = my_strcspn(my_str, my_str_different);
     size_t expected_len = strcspn(my_str, my_str_different);
@@ -57,7 +58,7 @@ Test(my_strcspn, different_string, .init=get_my_strcspn, .fini=close_lib)
     cr_assert(my_len == expected_len);
 }
 
-Test(my_strcspn, near_string, .init=get_my_strcspn, .fini=close_lib)
+Test(my_strcspn, near_string, .init = get_my_strcspn, .fini = close_lib)
 {
     size_t my_len = my_strcspn(my_str, my_str_near);
     size_t expected_len = strcspn(my_str, my_str_near);
@@ -65,7 +66,7 @@ Test(my_strcspn, near_string, .init=get_my_strcspn, .fini=close_lib)
     cr_assert(my_len == expected_len);
 }
 
-Test(my_strcspn, empty_string, .init=get_my_strcspn, .fini=close_lib)
+Test(my_strcspn, empty_string, .init = get_my_strcspn, .fini = close_lib)
 {
     size_t my_len = my_strcspn(my_str_empty, my_str);
     size_t expected_len = strcspn(my_str_empty, my_str);
@@ -73,7 +74,7 @@ Test(my_strcspn, empty_string, .init=get_my_strcspn, .fini=close_lib)
     cr_assert(my_len == expected_len);
 }
 
-Test(my_strcspn, string_empty, .init=get_my_strcspn, .fini=close_lib)
+Test(my_strcspn, string_empty, .init = get_my_strcspn, .fini = close_lib)
 {
     size_t my_len = my_strcspn(my_str, my_str_empty);
     size_t expected_len = strcspn(my_str, my_str_empty);
@@ -81,8 +82,7 @@ Test(my_strcspn, string_empty, .init=get_my_strcspn, .fini=close_lib)
     cr_assert(my_len == expected_len);
 }
 
-
-Test(my_strcspn, same_string_wide, .init=get_my_strcspn, .fini=close_lib)
+Test(my_strcspn, same_string_wide, .init = get_my_strcspn, .fini = close_lib)
 {
     size_t my_len = my_strcspn(my_str_wide, my_str);
     size_t expected_len = strcspn(my_str_wide, my_str);
@@ -90,7 +90,8 @@ Test(my_strcspn, same_string_wide, .init=get_my_strcspn, .fini=close_lib)
     cr_assert(my_len == expected_len);
 }
 
-Test(my_strcspn, different_string_wide, .init=get_my_strcspn, .fini=close_lib)
+Test(my_strcspn, different_string_wide, .init = get_my_strcspn,
+    .fini = close_lib)
 {
     size_t my_len = my_strcspn(my_str_wide, my_str_different);
     size_t expected_len = strcspn(my_str_wide, my_str_different);
@@ -98,37 +99,10 @@ Test(my_strcspn, different_string_wide, .init=get_my_strcspn, .fini=close_lib)
     cr_assert(my_len == expected_len);
 }
 
-Test(my_strcspn, near_string_wide, .init=get_my_strcspn, .fini=close_lib)
+Test(my_strcspn, near_string_wide, .init = get_my_strcspn, .fini = close_lib)
 {
     size_t my_len = my_strcspn(my_str_wide, my_str_near);
     size_t expected_len = strcspn(my_str_wide, my_str_near);
-
-    cr_assert(my_len == expected_len);
-}
-
-Test(my_strcspn, NULL_str, .init=get_my_strcspn, .fini=close_lib)
-{
-    char *my_null = NULL;
-    size_t my_len = my_strcspn(my_null, my_str);
-    size_t expected_len = strcspn(my_null, my_str);
-
-    cr_assert(my_len == expected_len);
-}
-
-Test(my_strcspn, NULL_reject, .init=get_my_strcspn, .fini=close_lib)
-{
-    char *my_null = NULL;
-    size_t my_len = my_strcspn(my_str, my_null);
-    size_t expected_len = strcspn(my_str, my_null);
-
-    cr_assert(my_len == expected_len);
-}
-
-Test(my_strcspn, NULL_args, .init=get_my_strcspn, .fini=close_lib)
-{
-    char *my_null = NULL;
-    size_t my_len = my_strcspn(my_null, my_null);
-    size_t expected_len = strcspn(my_null, my_null);
 
     cr_assert(my_len == expected_len);
 }
