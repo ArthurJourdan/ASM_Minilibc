@@ -21,14 +21,14 @@ memmove:
     jmp .RET
 
 .REVERSE:
-    mov rax, rdx          ; counter = arg3
+    xor rax, rax
     jmp .LOOP
 .LOOP:
-    mov r10b, BYTE[rsi + rax]
-    mov BYTE[rdi + rax], r10b
-    cmp rax, 0         ; check if counter == third argument
-    je .RET            ; if rax is equal to rdx, return
-    dec rax
+    mov r10b, BYTE[rsi + rdx]
+    mov BYTE[rdi + rdx], r10b
+    cmp rdx, 0         ; check if counter == third argument
+    jbe .RET            ; if rdx is equal to rdx, return
+    dec rdx
     jmp .LOOP           ; go to the begining of the loop
 .RET:
     mov rax, rdi        ; put ptr on first arg into return value
