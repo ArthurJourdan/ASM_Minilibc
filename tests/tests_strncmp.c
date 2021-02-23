@@ -105,29 +105,10 @@ Test(my_strncmp, empty_str_zero, .init=get_my_strncmp, .fini=close_lib)
     cr_assert_eq(my_cmp, my_expected_cmp);
 }
 
-Test(my_strncmp, NULL_s1, .init=get_my_strncmp, .fini=close_lib)
-{
-    char *my_null = NULL;
-    int my_cmp = my_strncmp(my_null, my_str, my_nb);
-    int my_expected_cmp = strncmp(my_null, my_str, my_nb);
-
-    cr_assert_eq(my_cmp, my_expected_cmp);
-}
-
-Test(my_strncmp, NULL_s2, .init=get_my_strncmp, .fini=close_lib)
-{
-    char *my_null = NULL;
-    int my_cmp = my_strncmp(my_str, my_null, my_nb);
-    int my_expected_cmp = strncmp(my_str, my_null, my_nb);
-
-    cr_assert_eq(my_cmp, my_expected_cmp);
-}
-
 Test(my_strncmp, NULL_args, .init=get_my_strncmp, .fini=close_lib)
 {
     char *my_null = NULL;
-    int my_cmp = my_strncmp(my_null, my_null, my_nb);
-    int my_expected_cmp = strncmp(my_null, my_null, my_nb);
+    int my_cmp = my_strncmp(my_null, my_null, 0);
 
-    cr_assert_eq(my_cmp, my_expected_cmp);
+    cr_assert_null(my_cmp);
 }

@@ -80,12 +80,3 @@ Test(my_strchr, find_0, .init=get_my_strchr, .fini=close_lib)
 
     cr_assert_str_eq(result_char, expected_char);
 }
-
-Test(my_strchr, NULL_string, .init=get_my_strchr, .fini=close_lib)
-{
-    void *my_null = NULL;
-    char *result_char = my_strchr(my_null, my_char);
-    char *expected_char = strchr(my_null, my_char);
-
-    cr_assert_str_eq(result_char, expected_char);
-}

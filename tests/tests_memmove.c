@@ -141,7 +141,6 @@ Test(my_memmove, int_arr, .init=get_my_memmove, .fini=close_lib)
     cr_assert_arr_eq(my_expect, my_move, my_size);
 }
 
-
 Test(my_memmove, overlap_int_arr, .init=get_my_memmove, .fini=close_lib)
 {
     size_t my_size = sizeof(my_int_arr);
@@ -162,40 +161,31 @@ Test(my_memmove, overlap_int_arr, .init=get_my_memmove, .fini=close_lib)
 
 Test(my_memmove, NULL_dest, .init=get_my_memmove, .fini=close_lib)
 {
-    size_t size = strlen(my_str);
     char *my_move = NULL;
-    char *my_expect = NULL;
 
-    my_memmove(my_move, my_str, size);
-    memmove(my_expect, my_str, size);
+    my_memmove(my_move, my_str, 0);
 
-    cr_assert_str_eq(my_move, my_expect);
+    cr_assert_null(my_move);
 }
 
 Test(my_memmove, NULL_src, .init=get_my_memmove, .fini=close_lib)
 {
-    size_t size = strlen(my_str);
     void *my_null = NULL;
-    char *my_move = malloc(sizeof(char) * (size + 1));
-    char *my_expect = malloc(sizeof(char) * (size + 1));
+    char *my_move = malloc(sizeof(char) * 1);
 
-    if (!my_move || !my_expect)
+    if (!my_move)
         cr_skip_test();
-    my_memmove(my_move, my_null, size);
-    memmove(my_expect, my_null, size);
+    my_memmove(my_move, my_null, 0);
 
-    cr_assert_str_eq(my_move, my_expect);
+    cr_assert_not_null(my_move);
 }
 
 Test(my_memmove, NULL_args, .init=get_my_memmove, .fini=close_lib)
 {
-    size_t size = strlen(my_str);
     void *my_null = NULL;
     char *my_move = NULL;
-    char *my_expect = NULL;
 
-    my_memmove(my_move, my_null, size);
-    memmove(my_expect, my_null, size);
+    my_memmove(my_move, my_null, 0);
 
-    cr_assert_str_eq(my_move, my_expect);
+    cr_assert_null(my_move);
 }

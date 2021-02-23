@@ -70,12 +70,3 @@ Test(my_strlen, long_string, .init=get_my_strlen, .fini=close_lib)
 
     cr_assert(my_len == expected_len);
 }
-
-Test(my_strlen, NULL_str, .init=get_my_strlen, .fini=close_lib)
-{
-    char *my_null = NULL;
-    size_t my_len = my_strlen(my_null);
-    size_t expected_len = strlen(my_null);
-
-    cr_assert(my_len == expected_len);
-}
