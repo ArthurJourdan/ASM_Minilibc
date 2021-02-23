@@ -66,8 +66,6 @@ ASM_SRC		=	${ASM_DIR}strchr.asm	\
 				${ASM_DIR}strlen.asm	\
 				${ASM_DIR}strcmp.asm	\
 				${ASM_DIR}memmove.asm	\
-				${ASM_DIR}getMax.asm	\
-				${ASM_DIR}getMin.asm
 
 ASM_OBJ		=	$(ASM_SRC:.asm=.o)
 

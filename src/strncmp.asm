@@ -3,7 +3,6 @@
 ;; strncmp.asm
 
 extern strlen
-extern getMax
 
 global strncmp:function
 ; int strncmp(const char *s1, const char *s2, size_t n)
