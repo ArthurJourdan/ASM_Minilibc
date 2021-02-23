@@ -1,6 +1,3 @@
-Makefile
-
-
 # COMPILED
 *.o
 *.a
