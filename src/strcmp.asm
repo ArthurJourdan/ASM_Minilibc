@@ -4,31 +4,27 @@
 
 BITS 64
 
-extern strlen
-extern getMax
-
-global strcmp:function
+global strcmp
 ; int strcmp(const char *s1, const char *s2)
 
 section .text
 
 strcmp:
-    call strlen
-    mov r12, rax ; put length of string in r12
-    xor al, al
+    xor rcx, rcx
     jmp .LOOP
 
 .LOOP:
-    mov al, BYTE[rdi]
-    sub al, BYTE[rsi]
+    mov al, BYTE[rdi + rcx]
+    sub al, BYTE[rsi + rcx]
     cmp al, 0 ; check if difference between char of s1 and char of s2 == 0
     jne .RET ; jump if al (aka difference) is not equal to 0
-    inc rdi
-    inc rsi
-    dec r12
-    cmp r12, 0
-    jb .RET ; if length of s1 has been traveled, end program
+    cmp BYTE[rdi + rcx], 0
+    je .RET
+    cmp BYTE[rsi + rcx], 0
+    je .RET
+    inc rcx
     jmp .LOOP ; go to the begining of the lOOP
 
 .RET:
+    movsx rax, al
     ret ; return al
