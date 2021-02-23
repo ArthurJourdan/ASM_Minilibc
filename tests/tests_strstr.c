@@ -5,21 +5,22 @@
 ** ASM minilibc
 */
 
-#include <criterion/criterion.h>
-#include <unistd.h>
 #include <dlfcn.h>
+#include <unistd.h>
+#include <criterion/criterion.h>
 
 static const char *my_str = "qwerty";
 static const char *my_str_empty = "";
-static const char *my_str_wide = \
-"qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbn";
+static const char *my_str_wide = "qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjk"
+                                 "lzxcvbnmqwertyuiopasdfghjklzxcvbn";
 static const char *my_str_sub = "ert";
 
 static const char *fp_libasm = "./libasm.so";
 static char *(*my_strstr)(const char *, const char *);
 static void *my_lib;
 static const char *err_missing_lib = "Shared lib \"%s\" could not be opened\n";
-static const char *err_missing_symbol = "Symbol \"%s\" could not be found in \"%s\"\n";
+static const char *err_missing_symbol =
+    "Symbol \"%s\" could not be found in \"%s\"\n";
 
 static void get_my_strstr()
 {
@@ -41,7 +42,15 @@ static void close_lib()
         dlclose(my_lib);
 }
 
-Test(my_strstr, simple, .init=get_my_strstr, .fini=close_lib)
+Test(my_strstr, same_string, .init = get_my_strstr, .fini = close_lib)
+{
+    char *result_str = my_strstr(my_str, my_str);
+    char *expected_str = strstr(my_str, my_str);
+
+    cr_assert_str_eq(result_str, expected_str);
+}
+
+Test(my_strstr, simple, .init = get_my_strstr, .fini = close_lib)
 {
     char *result_str = my_strstr(my_str, my_str_sub);
     char *expected_str = strstr(my_str, my_str_sub);
@@ -49,7 +58,7 @@ Test(my_strstr, simple, .init=get_my_strstr, .fini=close_lib)
     cr_assert_str_eq(result_str, expected_str);
 }
 
-Test(my_strstr, simple_string, .init=get_my_strstr, .fini=close_lib)
+Test(my_strstr, simple_string, .init = get_my_strstr, .fini = close_lib)
 {
     char *result_str = my_strstr(my_str, my_str_sub);
     char *expected_str = strstr(my_str, my_str_sub);
@@ -57,7 +66,7 @@ Test(my_strstr, simple_string, .init=get_my_strstr, .fini=close_lib)
     cr_assert_str_eq(result_str, expected_str);
 }
 
-Test(my_strstr, empty_string, .init=get_my_strstr, .fini=close_lib)
+Test(my_strstr, empty_string, .init = get_my_strstr, .fini = close_lib)
 {
     char *result_str = my_strstr(my_str_empty, my_str_sub);
     char *expected_str = strstr(my_str_empty, my_str_sub);
@@ -65,7 +74,7 @@ Test(my_strstr, empty_string, .init=get_my_strstr, .fini=close_lib)
     cr_assert_eq(result_str, expected_str);
 }
 
-Test(my_strstr, long_string, .init=get_my_strstr, .fini=close_lib)
+Test(my_strstr, long_string, .init = get_my_strstr, .fini = close_lib)
 {
     char *result_str = my_strstr(my_str_wide, my_str_sub);
     char *expected_str = strstr(my_str_wide, my_str_sub);
@@ -73,7 +82,7 @@ Test(my_strstr, long_string, .init=get_my_strstr, .fini=close_lib)
     cr_assert_str_eq(result_str, expected_str);
 }
 
-Test(my_strstr, find_nothing, .init=get_my_strstr, .fini=close_lib)
+Test(my_strstr, find_nothing, .init = get_my_strstr, .fini = close_lib)
 {
     char *result_str = my_strstr(my_str_wide, my_str_empty);
     char *expected_str = strstr(my_str_wide, my_str_empty);
@@ -81,29 +90,10 @@ Test(my_strstr, find_nothing, .init=get_my_strstr, .fini=close_lib)
     cr_assert_str_eq(result_str, expected_str);
 }
 
-Test(my_strstr, NULL_str, .init=get_my_strstr, .fini=close_lib)
+Test(my_strstr, simple_reversed, .init = get_my_strstr, .fini = close_lib)
 {
-    char *my_null = NULL;
-    char *result_str = my_strstr(my_null, my_str_sub);
-    char *expected_str = strstr(my_null, my_str_sub);
+    char *result_str = my_strstr(my_str_sub, my_str);
+    char *expected_str = strstr(my_str_sub, my_str);
 
-    cr_assert_str_eq(result_str, expected_str);
-}
-
-Test(my_strstr, NULL_str_sub, .init=get_my_strstr, .fini=close_lib)
-{
-    char *my_null = NULL;
-    char *result_str = my_strstr(my_str, my_null);
-    char *expected_str = strstr(my_str, my_null);
-
-    cr_assert_str_eq(result_str, expected_str);
-}
-
-Test(my_strstr, NULL_args, .init=get_my_strstr, .fini=close_lib)
-{
-    char *my_null = NULL;
-    char *result_str = my_strstr(my_null, my_null);
-    char *expected_str = strstr(my_null, my_null);
-
-    cr_assert_str_eq(result_str, expected_str);
+    cr_assert_eq(result_str, expected_str);
 }

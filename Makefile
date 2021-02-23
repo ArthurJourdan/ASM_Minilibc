@@ -71,6 +71,7 @@ ASM_SRC		=	${ASM_DIR}strchr.asm	\
 				${ASM_DIR}rindex.asm	\
 				${ASM_DIR}strcspn.asm	\
 				${ASM_DIR}strpbrk.asm	\
+				${ASM_DIR}strstr.asm	\
 
 ASM_OBJ		=	$(ASM_SRC:.asm=.o)
 

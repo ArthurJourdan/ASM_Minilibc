@@ -5,12 +5,11 @@
 BITS 64
 
 global strpbrk
-; char *strpbrk(const char *s, int c)
+; char *strpbrk(const char *s, const char *accept);
 
 section .text
 
 strpbrk:
-    xor rax, rax        ; size = 0
 .LOOP:
     cmp BYTE[rdi], 0
     je .NOT_FOUND
