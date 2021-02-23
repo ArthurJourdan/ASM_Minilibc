@@ -20,9 +20,9 @@ strcspn:
 .CHECK_REJECT:
     xor rcx, rcx        ; counter for reject loop = 0
 .LOOP_REJECT:
-    mov r10b, BYTE[rdi + rax]
-    cmp r10b, BYTE[rsi + rcx]    ; compare characters
-    je .CONTINUE        ; if characters are the same, do not increase size, continue main loop
+    mov r10b, BYTE[rdi + rbx]
+    cmp r10b, BYTE[rsi + rcx]    ; compare characters of two strings
+    je .RET        ; if characters are the same, do not increase size, continue main loop
     cmp BYTE[rsi + rcx], 0
     je .ACCEPT
     inc rcx
