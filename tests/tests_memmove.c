@@ -5,21 +5,22 @@
 ** ASM minilibc
 */
 
-#include <criterion/criterion.h>
-#include <unistd.h>
 #include <dlfcn.h>
+#include <unistd.h>
+#include <criterion/criterion.h>
 
 static const char *my_str = "qwerty";
 static const char *my_str_empty = "";
-static const char *my_str_wide = \
-"qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbn";
+static const char *my_str_wide = "qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjk"
+                                 "lzxcvbnmqwertyuiopasdfghjklzxcvbn";
 static const char my_int_arr[3] = {1, 2, 3};
 
 static const char *fp_libasm = "./libasm.so";
 static void *(*my_memmove)(void *, const void *, size_t);
 static void *my_lib;
 static const char *err_missing_lib = "Shared lib \"%s\" could not be opened\n";
-static const char *err_missing_symbol = "Symbol \"%s\" could not be found in \"%s\"\n";
+static const char *err_missing_symbol =
+    "Symbol \"%s\" could not be found in \"%s\"\n";
 
 static void get_my_memmove()
 {
@@ -41,7 +42,7 @@ static void close_lib()
         dlclose(my_lib);
 }
 
-Test(my_memmove, simple, .init=get_my_memmove, .fini=close_lib)
+Test(my_memmove, simple, .init = get_my_memmove, .fini = close_lib)
 {
     size_t my_size = strlen(my_str);
     char *my_move = malloc(sizeof(char) * (my_size + 1));
@@ -55,7 +56,7 @@ Test(my_memmove, simple, .init=get_my_memmove, .fini=close_lib)
     cr_assert_str_eq(my_move, my_expect);
 }
 
-Test(my_memmove, simple_string, .init=get_my_memmove, .fini=close_lib)
+Test(my_memmove, simple_string, .init = get_my_memmove, .fini = close_lib)
 {
     size_t my_size = strlen(my_str);
     char *my_move = malloc(sizeof(char) * (my_size + 1));
@@ -69,7 +70,7 @@ Test(my_memmove, simple_string, .init=get_my_memmove, .fini=close_lib)
     cr_assert_str_eq(my_move, my_expect);
 }
 
-Test(my_memmove, empty_string, .init=get_my_memmove, .fini=close_lib)
+Test(my_memmove, empty_string, .init = get_my_memmove, .fini = close_lib)
 {
     size_t my_size = strlen(my_str_empty);
     char *my_move = malloc(sizeof(char) * (my_size + 1));
@@ -83,7 +84,7 @@ Test(my_memmove, empty_string, .init=get_my_memmove, .fini=close_lib)
     cr_assert_str_eq(my_move, my_expect);
 }
 
-Test(my_memmove, long_string, .init=get_my_memmove, .fini=close_lib)
+Test(my_memmove, long_string, .init = get_my_memmove, .fini = close_lib)
 {
     size_t my_size = strlen(my_str_wide);
     char *my_move = malloc(sizeof(char) * (my_size + 1));
@@ -97,7 +98,8 @@ Test(my_memmove, long_string, .init=get_my_memmove, .fini=close_lib)
     cr_assert_str_eq(my_move, my_expect);
 }
 
-Test(my_memmove, long_string_partially, .init=get_my_memmove, .fini=close_lib)
+Test(my_memmove, long_string_partially, .init = get_my_memmove,
+    .fini = close_lib)
 {
     size_t my_size = strlen(my_str_wide) / 2;
     char *my_move = malloc(sizeof(char) * (my_size + 1));
@@ -111,7 +113,7 @@ Test(my_memmove, long_string_partially, .init=get_my_memmove, .fini=close_lib)
     cr_assert_str_eq(my_move, my_expect);
 }
 
-Test(my_memmove, overlap, .init=get_my_memmove, .fini=close_lib)
+Test(my_memmove, overlap, .init = get_my_memmove, .fini = close_lib)
 {
     size_t my_size = strlen(my_str);
     char *my_expect = malloc(sizeof(char) * my_size);
@@ -129,7 +131,7 @@ Test(my_memmove, overlap, .init=get_my_memmove, .fini=close_lib)
     cr_assert_str_eq(my_expect_2, my_move_2);
 }
 
-Test(my_memmove, int_arr, .init=get_my_memmove, .fini=close_lib)
+Test(my_memmove, int_arr, .init = get_my_memmove, .fini = close_lib)
 {
     size_t my_size = sizeof(my_int_arr);
     int *my_expect = malloc(my_size);
@@ -141,7 +143,7 @@ Test(my_memmove, int_arr, .init=get_my_memmove, .fini=close_lib)
     cr_assert_arr_eq(my_expect, my_move, my_size);
 }
 
-Test(my_memmove, overlap_int_arr, .init=get_my_memmove, .fini=close_lib)
+Test(my_memmove, overlap_int_arr, .init = get_my_memmove, .fini = close_lib)
 {
     size_t my_size = sizeof(my_int_arr);
     int *my_expect = malloc(my_size);
@@ -159,7 +161,7 @@ Test(my_memmove, overlap_int_arr, .init=get_my_memmove, .fini=close_lib)
     cr_assert_arr_eq(my_expect_2, my_move_2, my_size);
 }
 
-Test(my_memmove, NULL_dest, .init=get_my_memmove, .fini=close_lib)
+Test(my_memmove, NULL_dest, .init = get_my_memmove, .fini = close_lib)
 {
     char *my_move = NULL;
 
@@ -168,7 +170,7 @@ Test(my_memmove, NULL_dest, .init=get_my_memmove, .fini=close_lib)
     cr_assert_null(my_move);
 }
 
-Test(my_memmove, NULL_src, .init=get_my_memmove, .fini=close_lib)
+Test(my_memmove, NULL_src, .init = get_my_memmove, .fini = close_lib)
 {
     void *my_null = NULL;
     char *my_move = malloc(sizeof(char) * 1);
@@ -180,12 +182,14 @@ Test(my_memmove, NULL_src, .init=get_my_memmove, .fini=close_lib)
     cr_assert_not_null(my_move);
 }
 
-Test(my_memmove, NULL_args, .init=get_my_memmove, .fini=close_lib)
+Test(my_memmove, NULL_args, .init = get_my_memmove, .fini = close_lib)
 {
     void *my_null = NULL;
     char *my_move = NULL;
+    char *my_expected = NULL;
 
     my_memmove(my_move, my_null, 0);
+    memmove(my_expected, my_null, 0);
 
-    cr_assert_null(my_move);
+    cr_assert_eq(my_move, my_expected);
 }

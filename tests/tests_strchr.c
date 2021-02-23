@@ -5,21 +5,23 @@
 ** ASM minilibc
 */
 
-#include <criterion/criterion.h>
-#include <unistd.h>
 #include <dlfcn.h>
+#include <unistd.h>
+#include <criterion/criterion.h>
 
 static const char *my_str = "qwerty";
 static const char *my_str_empty = "";
-static const char *my_str_wide = \
-"qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbn";
+static const char *my_str_wide = "qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjk"
+                                 "lzxcvbnmqwertyuiopasdfghjklzxcvbn";
 static const char my_char = 't';
+static const char my_char_out = 'p';
 
 static const char *fp_libasm = "./libasm.so";
 static char *(*my_strchr)(const char *, int);
 static void *my_lib;
 static const char *err_missing_lib = "Shared lib \"%s\" could not be opened\n";
-static const char *err_missing_symbol = "Symbol \"%s\" could not be found in \"%s\"\n";
+static const char *err_missing_symbol =
+    "Symbol \"%s\" could not be found in \"%s\"\n";
 
 static void get_my_strchr()
 {
@@ -41,7 +43,7 @@ static void close_lib()
         dlclose(my_lib);
 }
 
-Test(my_strchr, simple, .init=get_my_strchr, .fini=close_lib)
+Test(my_strchr, simple, .init = get_my_strchr, .fini = close_lib)
 {
     char *result_char = my_strchr(my_str, my_char);
     char *expected_char = strchr(my_str, my_char);
@@ -49,7 +51,7 @@ Test(my_strchr, simple, .init=get_my_strchr, .fini=close_lib)
     cr_assert_str_eq(result_char, expected_char);
 }
 
-Test(my_strchr, simple_string, .init=get_my_strchr, .fini=close_lib)
+Test(my_strchr, simple_string, .init = get_my_strchr, .fini = close_lib)
 {
     char *result_char = my_strchr(my_str, my_char);
     char *expected_char = strchr(my_str, my_char);
@@ -57,7 +59,7 @@ Test(my_strchr, simple_string, .init=get_my_strchr, .fini=close_lib)
     cr_assert_str_eq(result_char, expected_char);
 }
 
-Test(my_strchr, empty_string, .init=get_my_strchr, .fini=close_lib)
+Test(my_strchr, empty_string, .init = get_my_strchr, .fini = close_lib)
 {
     char *result_char = my_strchr(my_str_empty, my_char);
     char *expected_char = strchr(my_str_empty, my_char);
@@ -65,7 +67,7 @@ Test(my_strchr, empty_string, .init=get_my_strchr, .fini=close_lib)
     cr_assert_eq(result_char, expected_char);
 }
 
-Test(my_strchr, long_string, .init=get_my_strchr, .fini=close_lib)
+Test(my_strchr, long_string, .init = get_my_strchr, .fini = close_lib)
 {
     char *result_char = my_strchr(my_str_wide, my_char);
     char *expected_char = strchr(my_str_wide, my_char);
@@ -73,10 +75,18 @@ Test(my_strchr, long_string, .init=get_my_strchr, .fini=close_lib)
     cr_assert_str_eq(result_char, expected_char);
 }
 
-Test(my_strchr, find_0, .init=get_my_strchr, .fini=close_lib)
+Test(my_strchr, find_0, .init = get_my_strchr, .fini = close_lib)
 {
     char *result_char = my_strchr(my_str_wide, '\0');
     char *expected_char = strchr(my_str_wide, '\0');
 
     cr_assert_str_eq(result_char, expected_char);
+}
+
+Test(my_strchr, simple_not_find, .init = get_my_strchr, .fini = close_lib)
+{
+    char *result_char = my_strchr(my_str, my_char_out);
+    char *expected_char = strchr(my_str, my_char_out);
+
+    cr_assert_eq(result_char, expected_char);
 }
