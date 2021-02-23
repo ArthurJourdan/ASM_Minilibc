@@ -7,6 +7,8 @@ extern strlen
 global strncmp:function
 ; int strncmp(const char *s1, const char *s2, size_t n)
 
+section .text
+
 strncmp:
     xor rcx, rcx
     jmp .LOOP
