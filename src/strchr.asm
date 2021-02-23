@@ -10,14 +10,14 @@ global strchr
 section .text
 
 strchr:
-    cmp BYTE[rdi], sil ; check if this char == char in arg2
-    je end_strchr ; if check is true, go to function end
-    cmp BYTE[rdi], 0 ; if end of the string
-    je end_not_found ; if check is true, return NULL
+    cmp BYTE[rdi], sil  ; check if this char == char in arg2
+    je  .RET            ; if check is true, go to function end
+    cmp BYTE[rdi], 0    ; if end of the string
+    je  .NOT_FOUND      ; if check is true, return NULL
     inc rdi
-    jmp strchr ; go to the begining of the loop
-end_not_found:
-    xor rdi, rdi ; set rdi to NULL
-end_strchr:
-    mov rax, rdi
-    ret ; return rax
+    jmp strchr          ; go to the begining of the loop
+.NOT_FOUND:
+    xor rdi, rdi        ; set rdi to NULL, then return
+.RET:
+    mov rax, rdi        ; set return value to actual char in the string
+    ret                 ; return rax
