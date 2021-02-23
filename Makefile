@@ -65,8 +65,10 @@ ASM_SRC		=	${ASM_DIR}strchr.asm	\
 				${ASM_DIR}putstr.asm	\
 				${ASM_DIR}strlen.asm	\
 				${ASM_DIR}strcmp.asm	\
+				${ASM_DIR}strncmp.asm	\
 				${ASM_DIR}memmove.asm	\
 				${ASM_DIR}strcasecmp.asm	\
+				${ASM_DIR}rindex.asm	\
 
 ASM_OBJ		=	$(ASM_SRC:.asm=.o)
 
