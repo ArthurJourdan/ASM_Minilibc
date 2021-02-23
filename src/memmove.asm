@@ -12,10 +12,12 @@ global memmove
 section .text
 
 memmove:
+    cmp rdx, 0          ; compare third argument with zero
+    je .RET             ; if nb of bytes to move is zero then return
     cmp rdi, rsi        ; compare first and second arguments
     jb .REVERSE         ; copy memory starting from end, if first is lower than second
     call memcpy         ; else do a memcpy
-    mov rdi, rax
+    mov rdi, rax        ; put return of memcpy into rdi
     jmp .RET
 
 .REVERSE:
