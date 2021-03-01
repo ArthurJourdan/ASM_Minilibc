@@ -17,6 +17,8 @@ strstr:
     mov rdi, rsi    ; to be able to use strlen on second
     mov rsi, r10    ; easily
 .LOOP:
+    cmp BYTE[rdi], 0
+    je .RET
     cmp BYTE[rsi], 0
     je .NOT_FOUND
     call strlen

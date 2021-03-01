@@ -74,6 +74,14 @@ Test(my_strstr, empty_string, .init = get_my_strstr, .fini = close_lib)
     cr_assert_eq(result_str, expected_str);
 }
 
+Test(my_strstr, two_empty_strings, .init = get_my_strstr, .fini = close_lib)
+{
+    char *result_str = my_strstr(my_str_empty, my_str_empty);
+    char *expected_str = strstr(my_str_empty, my_str_empty);
+
+    cr_assert_eq(result_str, expected_str);
+}
+
 Test(my_strstr, long_string, .init = get_my_strstr, .fini = close_lib)
 {
     char *result_str = my_strstr(my_str_wide, my_str_sub);
