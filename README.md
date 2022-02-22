@@ -1,6 +1,10 @@
 # Assembly : mini libc
 
-Epitech project : code a few functions of the standard C library, in assembly language
+Epitech - Second year project : A few functions of the standard C library, in assembly language (x86-64)
+
+## Tests
+
+Unit testing with criterion in C, executed by github actions 
 
 ## Knowledge
 
