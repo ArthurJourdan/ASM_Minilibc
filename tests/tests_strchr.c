@@ -43,7 +43,9 @@ static void close_lib()
         dlclose(my_lib);
 }
 
-Test(my_strchr, simple, .init = get_my_strchr, .fini = close_lib)
+TestSuite(my_strchr, .init=get_my_strchr, .fini=close_lib);
+
+Test(my_strchr, simple)
 {
     char *result_char = my_strchr(my_str, my_char);
     char *expected_char = strchr(my_str, my_char);
@@ -51,7 +53,7 @@ Test(my_strchr, simple, .init = get_my_strchr, .fini = close_lib)
     cr_assert_str_eq(result_char, expected_char);
 }
 
-Test(my_strchr, simple_string, .init = get_my_strchr, .fini = close_lib)
+Test(my_strchr, simple_string)
 {
     char *result_char = my_strchr(my_str, my_char);
     char *expected_char = strchr(my_str, my_char);
@@ -59,7 +61,7 @@ Test(my_strchr, simple_string, .init = get_my_strchr, .fini = close_lib)
     cr_assert_str_eq(result_char, expected_char);
 }
 
-Test(my_strchr, empty_string, .init = get_my_strchr, .fini = close_lib)
+Test(my_strchr, empty_string)
 {
     char *result_char = my_strchr(my_str_empty, my_char);
     char *expected_char = strchr(my_str_empty, my_char);
@@ -67,7 +69,7 @@ Test(my_strchr, empty_string, .init = get_my_strchr, .fini = close_lib)
     cr_assert_eq(result_char, expected_char);
 }
 
-Test(my_strchr, long_string, .init = get_my_strchr, .fini = close_lib)
+Test(my_strchr, long_string)
 {
     char *result_char = my_strchr(my_str_wide, my_char);
     char *expected_char = strchr(my_str_wide, my_char);
@@ -75,7 +77,7 @@ Test(my_strchr, long_string, .init = get_my_strchr, .fini = close_lib)
     cr_assert_str_eq(result_char, expected_char);
 }
 
-Test(my_strchr, find_0, .init = get_my_strchr, .fini = close_lib)
+Test(my_strchr, find_0)
 {
     char *result_char = my_strchr(my_str_wide, '\0');
     char *expected_char = strchr(my_str_wide, '\0');
@@ -83,7 +85,7 @@ Test(my_strchr, find_0, .init = get_my_strchr, .fini = close_lib)
     cr_assert_str_eq(result_char, expected_char);
 }
 
-Test(my_strchr, simple_not_find, .init = get_my_strchr, .fini = close_lib)
+Test(my_strchr, simple_not_find)
 {
     char *result_char = my_strchr(my_str, my_char_out);
     char *expected_char = strchr(my_str, my_char_out);

@@ -40,6 +40,8 @@ static void close_lib()
         dlclose(my_lib);
 }
 
+TestSuite(my_strcasecmp, .init=get_my_strcasecmp, .fini=close_lib);
+
 Test(my_strcasecmp, no_difference, .init=get_my_strcasecmp, .fini=close_lib)
 {
     int my_cmp = my_strcasecmp(my_str, my_str);

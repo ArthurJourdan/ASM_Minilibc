@@ -37,6 +37,8 @@ static void close_lib()
         dlclose(my_lib);
 }
 
+TestSuite(my_memset, .init=get_my_memset, .fini=close_lib);
+
 Test(my_memset, simple, .init=get_my_memset, .fini=close_lib)
 {
     size_t size = 10;

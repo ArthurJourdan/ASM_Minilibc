@@ -42,7 +42,9 @@ static void close_lib()
         dlclose(my_lib);
 }
 
-Test(my_strpbrk, simple, .init = get_my_strpbrk, .fini = close_lib)
+TestSuite(my_strpbrk, .init=get_my_strpbrk, .fini=close_lib);
+
+Test(my_strpbrk, simple)
 {
     char *result_str = my_strpbrk(my_str, my_str_sub);
     char *expected_str = strpbrk(my_str, my_str_sub);
@@ -50,7 +52,7 @@ Test(my_strpbrk, simple, .init = get_my_strpbrk, .fini = close_lib)
     cr_assert_str_eq(result_str, expected_str);
 }
 
-Test(my_strpbrk, simple_string, .init = get_my_strpbrk, .fini = close_lib)
+Test(my_strpbrk, simple_string)
 {
     char *result_str = my_strpbrk(my_str, my_str_sub);
     char *expected_str = strpbrk(my_str, my_str_sub);
@@ -58,7 +60,7 @@ Test(my_strpbrk, simple_string, .init = get_my_strpbrk, .fini = close_lib)
     cr_assert_str_eq(result_str, expected_str);
 }
 
-Test(my_strpbrk, empty_string, .init = get_my_strpbrk, .fini = close_lib)
+Test(my_strpbrk, empty_string)
 {
     char *result_str = my_strpbrk(my_str_empty, my_str_sub);
     char *expected_str = strpbrk(my_str_empty, my_str_sub);
@@ -66,7 +68,7 @@ Test(my_strpbrk, empty_string, .init = get_my_strpbrk, .fini = close_lib)
     cr_assert_eq(result_str, expected_str);
 }
 
-Test(my_strpbrk, long_string, .init = get_my_strpbrk, .fini = close_lib)
+Test(my_strpbrk, long_string)
 {
     char *result_str = my_strpbrk(my_str_wide, my_str_sub);
     char *expected_str = strpbrk(my_str_wide, my_str_sub);
@@ -74,7 +76,7 @@ Test(my_strpbrk, long_string, .init = get_my_strpbrk, .fini = close_lib)
     cr_assert_str_eq(result_str, expected_str);
 }
 
-Test(my_strpbrk, find_nothing, .init = get_my_strpbrk, .fini = close_lib)
+Test(my_strpbrk, find_nothing)
 {
     char *result_str = my_strpbrk(my_str_wide, my_str_empty);
     char *expected_str = strpbrk(my_str_wide, my_str_empty);

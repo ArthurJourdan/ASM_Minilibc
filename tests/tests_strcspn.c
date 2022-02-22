@@ -42,6 +42,8 @@ static void close_lib()
         dlclose(my_lib);
 }
 
+TestSuite(my_strcspn, .init=get_my_strcspn, .fini=close_lib);
+
 Test(my_strcspn, same_string, .init = get_my_strcspn, .fini = close_lib)
 {
     size_t my_len = my_strcspn(my_str, my_str);

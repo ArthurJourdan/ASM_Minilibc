@@ -41,8 +41,9 @@ static void close_lib()
     if (my_lib)
         dlclose(my_lib);
 }
+TestSuite(my_rindex, .init=get_my_rindex, .fini=close_lib);
 
-Test(my_rindex, simple, .init = get_my_rindex, .fini = close_lib)
+Test(my_rindex, simple)
 {
     char *result_char = my_rindex(my_str, my_char);
     char *expected_char = rindex(my_str, my_char);
@@ -50,7 +51,7 @@ Test(my_rindex, simple, .init = get_my_rindex, .fini = close_lib)
     cr_assert_str_eq(result_char, expected_char);
 }
 
-Test(my_rindex, simple_string, .init = get_my_rindex, .fini = close_lib)
+Test(my_rindex, simple_string)
 {
     char *result_char = my_rindex(my_str, my_char);
     char *expected_char = rindex(my_str, my_char);
@@ -58,7 +59,7 @@ Test(my_rindex, simple_string, .init = get_my_rindex, .fini = close_lib)
     cr_assert_str_eq(result_char, expected_char);
 }
 
-Test(my_rindex, empty_string, .init = get_my_rindex, .fini = close_lib)
+Test(my_rindex, empty_string)
 {
     char *result_char = my_rindex(my_str_empty, my_char);
     char *expected_char = rindex(my_str_empty, my_char);
@@ -66,7 +67,7 @@ Test(my_rindex, empty_string, .init = get_my_rindex, .fini = close_lib)
     cr_assert_eq(result_char, expected_char);
 }
 
-Test(my_rindex, long_string, .init = get_my_rindex, .fini = close_lib)
+Test(my_rindex, long_string)
 {
     char *result_char = my_rindex(my_str_wide, my_char);
     char *expected_char = rindex(my_str_wide, my_char);
@@ -74,7 +75,7 @@ Test(my_rindex, long_string, .init = get_my_rindex, .fini = close_lib)
     cr_assert_str_eq(result_char, expected_char);
 }
 
-Test(my_rindex, find_0, .init = get_my_rindex, .fini = close_lib)
+Test(my_rindex, find_0)
 {
     char *result_char = my_rindex(my_str_wide, '\0');
     char *expected_char = rindex(my_str_wide, '\0');

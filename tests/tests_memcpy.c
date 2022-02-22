@@ -40,8 +40,9 @@ static void close_lib()
     if (my_lib)
         dlclose(my_lib);
 }
+TestSuite(my_memcpy, .init=get_my_memcpy, .fini=close_lib);
 
-Test(my_memcpy, simple, .init=get_my_memcpy, .fini=close_lib)
+Test(my_memcpy, simple)
 {
     size_t size = strlen(my_str);
     char *my_copy = malloc(sizeof(char) * (size + 1));
@@ -55,7 +56,7 @@ Test(my_memcpy, simple, .init=get_my_memcpy, .fini=close_lib)
     cr_assert_str_eq(my_copy, my_expect);
 }
 
-Test(my_memcpy, simple_string, .init=get_my_memcpy, .fini=close_lib)
+Test(my_memcpy, simple_string)
 {
     size_t size = strlen(my_str);
     char *my_copy = malloc(sizeof(char) * (size + 1));
@@ -69,7 +70,7 @@ Test(my_memcpy, simple_string, .init=get_my_memcpy, .fini=close_lib)
     cr_assert_str_eq(my_copy, my_expect);
 }
 
-Test(my_memcpy, empty_string, .init=get_my_memcpy, .fini=close_lib)
+Test(my_memcpy, empty_string)
 {
     size_t size = strlen(my_str_empty);
     char *my_copy = malloc(sizeof(char) * (size + 1));
@@ -83,7 +84,7 @@ Test(my_memcpy, empty_string, .init=get_my_memcpy, .fini=close_lib)
     cr_assert_str_eq(my_copy, my_expect);
 }
 
-Test(my_memcpy, long_string, .init=get_my_memcpy, .fini=close_lib)
+Test(my_memcpy, long_string)
 {
     size_t size = strlen(my_str_long);
     char *my_copy = malloc(sizeof(char) * (size + 1));
@@ -97,7 +98,7 @@ Test(my_memcpy, long_string, .init=get_my_memcpy, .fini=close_lib)
     cr_assert_str_eq(my_copy, my_expect);
 }
 
-Test(my_memcpy, overlap, .init=get_my_memcpy, .fini=close_lib)
+Test(my_memcpy, overlap)
 {
     size_t my_len = strlen(my_str);
     char *my_expect = malloc(sizeof(char) * my_len);
@@ -115,7 +116,7 @@ Test(my_memcpy, overlap, .init=get_my_memcpy, .fini=close_lib)
     cr_assert_str_eq(my_expect_2, my_cpy_2);
 }
 
-Test(my_memcpy, int_arr, .init=get_my_memcpy, .fini=close_lib)
+Test(my_memcpy, int_arr)
 {
     size_t my_len = sizeof(my_int_arr);
     int *my_expect = malloc(my_len);
@@ -127,7 +128,7 @@ Test(my_memcpy, int_arr, .init=get_my_memcpy, .fini=close_lib)
     cr_assert_arr_eq(my_expect, my_cpy, my_len);
 }
 
-Test(my_memcpy, overlap_int_arr, .init=get_my_memcpy, .fini=close_lib)
+Test(my_memcpy, overlap_int_arr)
 {
     size_t my_len = sizeof(my_int_arr);
     int *my_expect = malloc(my_len);
@@ -145,7 +146,7 @@ Test(my_memcpy, overlap_int_arr, .init=get_my_memcpy, .fini=close_lib)
     cr_assert_arr_eq(my_expect_2, my_cpy_2, my_len);
 }
 
-Test(my_memcpy, NULL_args, .init=get_my_memcpy, .fini=close_lib)
+Test(my_memcpy, NULL_args)
 {
     void *my_null = NULL;
     char *my_copy = NULL;

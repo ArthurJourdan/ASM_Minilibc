@@ -19,6 +19,7 @@ src/main.c
 *#*
 *~
 *.vscode*
+.idea
 # !TEMPORARY
 
 # MY_THINGS

@@ -41,7 +41,9 @@ static void close_lib()
         dlclose(my_lib);
 }
 
-Test(my_strncmp, no_difference, .init=get_my_strncmp, .fini=close_lib)
+TestSuite(my_strncmp, .init=get_my_strncmp, .fini=close_lib);
+
+Test(my_strncmp, no_difference)
 {
     int my_cmp = my_strncmp(my_str, my_str, my_nb);
     int my_expected_cmp = strncmp(my_str, my_str, my_nb);
@@ -49,7 +51,7 @@ Test(my_strncmp, no_difference, .init=get_my_strncmp, .fini=close_lib)
     cr_assert_eq(my_cmp, my_expected_cmp);
 }
 
-Test(my_strncmp, no_difference_zero, .init=get_my_strncmp, .fini=close_lib)
+Test(my_strncmp, no_difference_zero)
 {
     int my_cmp = my_strncmp(my_str, my_str, 0);
     int my_expected_cmp = strncmp(my_str, my_str, 0);
@@ -57,7 +59,7 @@ Test(my_strncmp, no_difference_zero, .init=get_my_strncmp, .fini=close_lib)
     cr_assert_eq(my_cmp, my_expected_cmp);
 }
 
-Test(my_strncmp, inc_ptr, .init=get_my_strncmp, .fini=close_lib)
+Test(my_strncmp, inc_ptr)
 {
     int my_cmp = my_strncmp(my_str, my_str + 1, my_nb);
     int my_expected_cmp = strncmp(my_str, my_str + 1, my_nb);
@@ -65,7 +67,7 @@ Test(my_strncmp, inc_ptr, .init=get_my_strncmp, .fini=close_lib)
     cr_assert_eq(my_cmp, my_expected_cmp);
 }
 
-Test(my_strncmp, near, .init=get_my_strncmp, .fini=close_lib)
+Test(my_strncmp, near)
 {
     int my_cmp = my_strncmp(my_str, my_str_different, my_nb);
     int my_expected_cmp = strncmp(my_str, my_str_different, my_nb);
@@ -73,7 +75,7 @@ Test(my_strncmp, near, .init=get_my_strncmp, .fini=close_lib)
     cr_assert_eq(my_cmp, my_expected_cmp);
 }
 
-Test(my_strncmp, no_similarity, .init=get_my_strncmp, .fini=close_lib)
+Test(my_strncmp, no_similarity)
 {
     int my_cmp = my_strncmp(my_str, my_str_very_different, my_nb);
     int my_expected_cmp = strncmp(my_str, my_str_very_different, my_nb);
@@ -81,7 +83,7 @@ Test(my_strncmp, no_similarity, .init=get_my_strncmp, .fini=close_lib)
     cr_assert_eq(my_cmp, my_expected_cmp);
 }
 
-Test(my_strncmp, no_similarity_zero, .init=get_my_strncmp, .fini=close_lib)
+Test(my_strncmp, no_similarity_zero)
 {
     int my_cmp = my_strncmp(my_str, my_str_very_different, 0);
     int my_expected_cmp = strncmp(my_str, my_str_very_different, 0);
@@ -89,7 +91,7 @@ Test(my_strncmp, no_similarity_zero, .init=get_my_strncmp, .fini=close_lib)
     cr_assert_eq(my_cmp, my_expected_cmp);
 }
 
-Test(my_strncmp, no_similarity_empty_str, .init=get_my_strncmp, .fini=close_lib)
+Test(my_strncmp, no_similarity_empty_str)
 {
     int my_cmp = my_strncmp(my_str, my_str_empty, my_nb);
     int my_expected_cmp = strncmp(my_str, my_str_empty, my_nb);
@@ -97,7 +99,7 @@ Test(my_strncmp, no_similarity_empty_str, .init=get_my_strncmp, .fini=close_lib)
     cr_assert_eq(my_cmp, my_expected_cmp);
 }
 
-Test(my_strncmp, empty_str_zero, .init=get_my_strncmp, .fini=close_lib)
+Test(my_strncmp, empty_str_zero)
 {
     int my_cmp = my_strncmp(my_str_empty, my_str_empty, my_nb);
     int my_expected_cmp = strncmp(my_str_empty, my_str_empty, my_nb);
@@ -105,7 +107,7 @@ Test(my_strncmp, empty_str_zero, .init=get_my_strncmp, .fini=close_lib)
     cr_assert_eq(my_cmp, my_expected_cmp);
 }
 
-Test(my_strncmp, NULL_args, .init=get_my_strncmp, .fini=close_lib)
+Test(my_strncmp, NULL_args)
 {
     char *my_null = NULL;
     int my_cmp = my_strncmp(my_null, my_null, 0);

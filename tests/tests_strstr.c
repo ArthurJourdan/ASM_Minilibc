@@ -42,7 +42,9 @@ static void close_lib()
         dlclose(my_lib);
 }
 
-Test(my_strstr, same_string, .init = get_my_strstr, .fini = close_lib)
+TestSuite(my_strstr, .init=get_my_strstr, .fini=close_lib);
+
+Test(my_strstr, same_string)
 {
     char *result_str = my_strstr(my_str, my_str);
     char *expected_str = strstr(my_str, my_str);
@@ -50,7 +52,7 @@ Test(my_strstr, same_string, .init = get_my_strstr, .fini = close_lib)
     cr_assert_str_eq(result_str, expected_str);
 }
 
-Test(my_strstr, simple, .init = get_my_strstr, .fini = close_lib)
+Test(my_strstr, simple)
 {
     char *result_str = my_strstr(my_str, my_str_sub);
     char *expected_str = strstr(my_str, my_str_sub);
@@ -58,7 +60,7 @@ Test(my_strstr, simple, .init = get_my_strstr, .fini = close_lib)
     cr_assert_str_eq(result_str, expected_str);
 }
 
-Test(my_strstr, simple_string, .init = get_my_strstr, .fini = close_lib)
+Test(my_strstr, simple_string)
 {
     char *result_str = my_strstr(my_str, my_str_sub);
     char *expected_str = strstr(my_str, my_str_sub);
@@ -66,7 +68,7 @@ Test(my_strstr, simple_string, .init = get_my_strstr, .fini = close_lib)
     cr_assert_str_eq(result_str, expected_str);
 }
 
-Test(my_strstr, empty_string, .init = get_my_strstr, .fini = close_lib)
+Test(my_strstr, empty_string)
 {
     char *result_str = my_strstr(my_str_empty, my_str_sub);
     char *expected_str = strstr(my_str_empty, my_str_sub);
@@ -74,7 +76,7 @@ Test(my_strstr, empty_string, .init = get_my_strstr, .fini = close_lib)
     cr_assert_eq(result_str, expected_str);
 }
 
-Test(my_strstr, two_empty_strings, .init = get_my_strstr, .fini = close_lib)
+Test(my_strstr, two_empty_strings)
 {
     char *result_str = my_strstr(my_str_empty, my_str_empty);
     char *expected_str = strstr(my_str_empty, my_str_empty);
@@ -82,7 +84,7 @@ Test(my_strstr, two_empty_strings, .init = get_my_strstr, .fini = close_lib)
     cr_assert_eq(result_str, expected_str);
 }
 
-Test(my_strstr, long_string, .init = get_my_strstr, .fini = close_lib)
+Test(my_strstr, long_string)
 {
     char *result_str = my_strstr(my_str_wide, my_str_sub);
     char *expected_str = strstr(my_str_wide, my_str_sub);
@@ -90,7 +92,7 @@ Test(my_strstr, long_string, .init = get_my_strstr, .fini = close_lib)
     cr_assert_str_eq(result_str, expected_str);
 }
 
-Test(my_strstr, find_nothing, .init = get_my_strstr, .fini = close_lib)
+Test(my_strstr, find_nothing)
 {
     char *result_str = my_strstr(my_str_wide, my_str_empty);
     char *expected_str = strstr(my_str_wide, my_str_empty);
@@ -98,7 +100,7 @@ Test(my_strstr, find_nothing, .init = get_my_strstr, .fini = close_lib)
     cr_assert_str_eq(result_str, expected_str);
 }
 
-Test(my_strstr, simple_reversed, .init = get_my_strstr, .fini = close_lib)
+Test(my_strstr, simple_reversed)
 {
     char *result_str = my_strstr(my_str_sub, my_str);
     char *expected_str = strstr(my_str_sub, my_str);

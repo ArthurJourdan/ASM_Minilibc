@@ -39,7 +39,9 @@ static void close_lib()
         dlclose(my_lib);
 }
 
-Test(my_strlen, simple, .init=get_my_strlen, .fini=close_lib)
+TestSuite(my_strlen, .init=get_my_strlen, .fini=close_lib);
+
+Test(my_strlen, simple)
 {
     size_t my_len = my_strlen(my_str);
     size_t expected_len = strlen(my_str);
@@ -47,7 +49,7 @@ Test(my_strlen, simple, .init=get_my_strlen, .fini=close_lib)
     cr_assert(my_len == expected_len);
 }
 
-Test(my_strlen, simple_string, .init=get_my_strlen, .fini=close_lib)
+Test(my_strlen, simple_string)
 {
     size_t my_len = my_strlen(my_str);
     size_t expected_len = strlen(my_str);
@@ -55,7 +57,7 @@ Test(my_strlen, simple_string, .init=get_my_strlen, .fini=close_lib)
     cr_assert(my_len == expected_len);
 }
 
-Test(my_strlen, empty_string, .init=get_my_strlen, .fini=close_lib)
+Test(my_strlen, empty_string)
 {
     size_t my_len = my_strlen(my_str_empty);
     size_t expected_len = strlen(my_str_empty);
@@ -63,7 +65,7 @@ Test(my_strlen, empty_string, .init=get_my_strlen, .fini=close_lib)
     cr_assert(my_len == expected_len);
 }
 
-Test(my_strlen, long_string, .init=get_my_strlen, .fini=close_lib)
+Test(my_strlen, long_string)
 {
     size_t my_len = my_strlen(my_str_wide);
     size_t expected_len = strlen(my_str_wide);
